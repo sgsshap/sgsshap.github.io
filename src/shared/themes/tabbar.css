@@ -1,0 +1,416 @@
+/* 移动端底栏：基础样式 + 各主题 token（由 body.theme-* 覆盖） */
+
+body .app-shell__tabbar {
+  --tabbar-height: 56px;
+  --tabbar-bg: color-mix(in srgb, var(--body-color) 88%, transparent);
+  --tabbar-border: color-mix(in srgb, var(--divider-color) 85%, transparent);
+  --tabbar-shadow: 0 -6px 28px rgba(0, 0, 0, 0.1), 0 -1px 0 var(--tabbar-border);
+  --tabbar-rail: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in srgb, var(--primary-color) 35%, var(--divider-color)) 50%,
+    transparent 100%
+  );
+  --tabbar-pill-bg: color-mix(in srgb, var(--primary-color) 14%, var(--body-color));
+  --tabbar-pill-border: color-mix(in srgb, var(--primary-color) 22%, transparent);
+  --tabbar-inactive: var(--text-color-3);
+  --tabbar-active: var(--primary-color);
+  --tabbar-icon-active-shadow: none;
+  --tabbar-radius: 0;
+  --tabbar-backdrop: blur(14px) saturate(1.15);
+}
+
+body .app-shell__tabbar {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  height: calc(var(--tabbar-height) + var(--safe-area-bottom, env(safe-area-inset-bottom, 0px)));
+  padding-bottom: var(--safe-area-bottom, env(safe-area-inset-bottom, 0px));
+  background: var(--tabbar-bg);
+  border-top: 1px solid var(--tabbar-border);
+  border-radius: var(--tabbar-radius) var(--tabbar-radius) 0 0;
+  box-shadow: var(--tabbar-shadow);
+  backdrop-filter: var(--tabbar-backdrop);
+  -webkit-backdrop-filter: var(--tabbar-backdrop);
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+  backface-visibility: hidden;
+}
+
+body .app-shell__tabbar::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: -2px;
+  height: 2px;
+  background: inherit;
+  pointer-events: none;
+}
+
+body .app-shell__tabbar-rail {
+  flex: 0 0 auto;
+  height: 2px;
+  margin: 0 12px;
+  background: var(--tabbar-rail);
+  opacity: 0.9;
+  pointer-events: none;
+}
+
+body .app-shell__tabbar-inner {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: stretch;
+  min-height: 0;
+  padding: 3px 6px 5px;
+  --tab-count: 3;
+  --tab-index: 0;
+}
+
+/* 滑动胶囊：宽度对齐单格 Tab，高度包住图标+文字 */
+body .app-shell__tab-indicator {
+  position: absolute;
+  top: 3px;
+  bottom: 5px;
+  left: 6px;
+  width: calc((100% - 12px) / var(--tab-count));
+  z-index: 0;
+  pointer-events: none;
+  transform: translateX(calc(var(--tab-index) * 100%));
+  transition: transform 0.62s cubic-bezier(0.34, 1.56, 0.64, 1);
+  will-change: transform;
+}
+
+body .app-shell__tab-indicator-surface {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 999px;
+  border: 1px solid var(--tabbar-pill-border);
+  background: var(--tabbar-pill-bg);
+  transform-origin: center center;
+}
+
+body .app-shell__tab-indicator--spring .app-shell__tab-indicator-surface {
+  animation: tabbar-indicator-surface-spring 0.72s cubic-bezier(0.34, 1.65, 0.64, 1) both;
+}
+
+@keyframes tabbar-indicator-surface-spring {
+  0% {
+    transform: scale(0.72, 0.78);
+    opacity: 0.65;
+  }
+
+  38% {
+    transform: scale(1.1, 1.08);
+    opacity: 1;
+  }
+
+  58% {
+    transform: scale(0.94, 0.96);
+  }
+
+  76% {
+    transform: scale(1.03, 1.02);
+  }
+
+  100% {
+    transform: scale(1, 1);
+    opacity: 1;
+  }
+}
+
+body .app-shell__tab {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  background: transparent;
+  color: var(--tabbar-inactive);
+  cursor: pointer;
+  padding: 0;
+  -webkit-tap-highlight-color: transparent;
+  transition: color 0.28s ease;
+}
+
+body .app-shell__tab-inner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+  min-width: 52px;
+  padding: 4px 10px 3px;
+}
+
+body .app-shell__tab-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transform-origin: center bottom;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.45, 0.64, 1),
+    filter 0.28s ease;
+}
+
+body .app-shell__tab--active {
+  color: var(--tabbar-active);
+}
+
+body .app-shell__tab--active .app-shell__tab-icon {
+  filter: var(--tabbar-icon-active-shadow);
+}
+
+body .app-shell__tab--spring .app-shell__tab-icon {
+  animation: tabbar-icon-spring 0.72s cubic-bezier(0.34, 1.65, 0.64, 1) both;
+}
+
+@keyframes tabbar-icon-spring {
+  0% {
+    transform: translateY(4px) scale(0.82);
+  }
+
+  42% {
+    transform: translateY(-3px) scale(1.14);
+  }
+
+  62% {
+    transform: translateY(0) scale(0.96);
+  }
+
+  80% {
+    transform: translateY(-1px) scale(1.05);
+  }
+
+  100% {
+    transform: translateY(-1px) scale(1.06);
+  }
+}
+
+body .app-shell__tab--active:not(.app-shell__tab--spring) .app-shell__tab-icon {
+  transform: translateY(-1px) scale(1.06);
+}
+
+body .app-shell__tab:active .app-shell__tab-icon {
+  transform: scale(0.88);
+  transition-duration: 0.1s;
+}
+
+body .app-shell__tab--active:active .app-shell__tab-icon {
+  transform: translateY(0) scale(0.96);
+}
+
+body .app-shell__tab-label {
+  font-size: 11px;
+  line-height: 1.2;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  transform-origin: center top;
+  transition:
+    transform 0.35s cubic-bezier(0.34, 1.45, 0.64, 1),
+    font-weight 0.25s ease,
+    letter-spacing 0.25s ease;
+}
+
+body .app-shell__tab--active .app-shell__tab-label {
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+body .app-shell__tab--spring .app-shell__tab-label {
+  animation: tabbar-label-spring 0.72s cubic-bezier(0.34, 1.65, 0.64, 1) both;
+}
+
+@keyframes tabbar-label-spring {
+  0% {
+    transform: translateY(3px) scale(0.9);
+    opacity: 0.7;
+  }
+
+  45% {
+    transform: translateY(-1px) scale(1.06);
+    opacity: 1;
+  }
+
+  68% {
+    transform: translateY(1px) scale(0.97);
+  }
+
+  100% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+/* ---------- 势力主题：克制、主色点缀 ---------- */
+body.theme-qun .app-shell__tabbar,
+body.theme-wei .app-shell__tabbar,
+body.theme-shu .app-shell__tabbar,
+body.theme-wu .app-shell__tabbar,
+body.theme-jin .app-shell__tabbar,
+body.theme-chibi .app-shell__tabbar {
+  --tabbar-radius: 16px 16px 0 0;
+  --tabbar-shadow: 0 -8px 32px rgba(0, 0, 0, 0.12), 0 -1px 0 var(--tabbar-border);
+  --tabbar-pill-bg: color-mix(in srgb, var(--primary-color) 16%, var(--card-color));
+}
+
+body.dark.theme-qun .app-shell__tabbar,
+body.dark.theme-wei .app-shell__tabbar,
+body.dark.theme-shu .app-shell__tabbar,
+body.dark.theme-wu .app-shell__tabbar,
+body.dark.theme-jin .app-shell__tabbar,
+body.dark.theme-chibi .app-shell__tabbar {
+  --tabbar-shadow: 0 -10px 36px rgba(0, 0, 0, 0.45), 0 -1px 0 var(--tabbar-border);
+}
+
+/* ---------- 水墨 ---------- */
+body.theme-shuimo .app-shell__tabbar {
+  --tabbar-radius: 18px 18px 0 0;
+  --tabbar-bg: color-mix(in srgb, var(--card-color) 94%, rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)));
+  --tabbar-border: color-mix(in srgb, rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)) 18%, transparent);
+  --tabbar-rail: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--primary-color) 28%, rgb(80, 72, 64)) 45%,
+    color-mix(in srgb, var(--primary-color) 28%, rgb(80, 72, 64)) 55%,
+    transparent
+  );
+  --tabbar-pill-bg: color-mix(in srgb, var(--primary-color) 10%, var(--card-color));
+  --tabbar-pill-border: color-mix(in srgb, var(--primary-color) 20%, transparent);
+  --tabbar-shadow: 0 -10px 28px rgba(42, 38, 34, 0.08), 0 -1px 0 var(--tabbar-border);
+}
+
+body.dark.theme-shuimo .app-shell__tabbar {
+  --tabbar-shadow: 0 -12px 32px rgba(0, 0, 0, 0.5), 0 -1px 0 var(--tabbar-border);
+}
+
+/* ---------- 山海 ---------- */
+body.theme-shanhai .app-shell__tabbar {
+  --tabbar-radius: 16px 16px 0 0;
+  --tabbar-rail: linear-gradient(
+    90deg,
+    transparent 4%,
+    color-mix(in srgb, var(--error-color) 55%, transparent) 22%,
+    color-mix(in srgb, var(--primary-color) 50%, transparent) 50%,
+    color-mix(in srgb, var(--info-color) 45%, transparent) 78%,
+    transparent 96%
+  );
+  --tabbar-pill-bg: color-mix(in srgb, var(--primary-color) 12%, var(--card-color));
+  --tabbar-pill-border: color-mix(in srgb, var(--error-color) 25%, var(--primary-color) 25%);
+  --tabbar-shadow: 0 -8px 30px color-mix(in srgb, var(--primary-color) 12%, rgba(0, 0, 0, 0.14));
+}
+
+body.dark.theme-shanhai .app-shell__tabbar {
+  --tabbar-shadow: 0 -10px 36px rgba(0, 0, 0, 0.55), 0 -1px 0 var(--tabbar-border);
+}
+
+/* ---------- 赛博 ---------- */
+body.theme-cyber .app-shell__tabbar {
+  --tabbar-radius: 0;
+  --tabbar-bg: color-mix(in srgb, rgb(8, 10, 18) 92%, transparent);
+  --tabbar-border: rgba(0, 229, 255, 0.35);
+  --tabbar-rail: linear-gradient(90deg, rgba(0, 229, 255, 0.15), rgba(255, 79, 216, 0.85), rgba(0, 229, 255, 0.15));
+  --tabbar-pill-bg: color-mix(in srgb, rgba(0, 229, 255, 0.12) 50%, rgba(255, 79, 216, 0.08));
+  --tabbar-pill-border: rgba(0, 229, 255, 0.45);
+  --tabbar-active: #00e5ff;
+  --tabbar-icon-active-shadow: drop-shadow(0 0 6px rgba(0, 229, 255, 0.55))
+    drop-shadow(0 0 4px rgba(255, 79, 216, 0.35));
+  --tabbar-shadow: 0 -4px 24px rgba(0, 229, 255, 0.22), 0 -2px 0 rgba(255, 79, 216, 0.2);
+  --tabbar-backdrop: blur(10px) saturate(1.4);
+}
+
+body.theme-cyber .app-shell__tab--active .app-shell__tab-label {
+  text-shadow: 0.6px 0 rgba(0, 229, 255, 0.5), -0.6px 0 rgba(255, 79, 216, 0.45);
+}
+
+body.light.theme-cyber .app-shell__tabbar {
+  --tabbar-bg: color-mix(in srgb, var(--card-color) 96%, rgba(0, 229, 255, 0.06));
+  --tabbar-border: color-mix(in srgb, var(--primary-color) 32%, transparent);
+  --tabbar-shadow: 0 -6px 28px color-mix(in srgb, var(--primary-color) 18%, rgba(0, 0, 0, 0.08));
+}
+
+/* ---------- 像素 ---------- */
+body.theme-pixel .app-shell__tabbar {
+  --tabbar-radius: 0;
+  --tabbar-backdrop: none;
+  --tabbar-bg: var(--body-color);
+  --tabbar-border: rgba(0, 0, 0, 0.55);
+  --tabbar-rail: none;
+  --tabbar-pill-bg: color-mix(in srgb, var(--primary-color) 22%, var(--body-color));
+  --tabbar-pill-border: rgba(0, 0, 0, 0.65);
+  --tabbar-shadow: 0 -4px 0 rgba(0, 0, 0, 0.28), 0 -8px 0 rgba(0, 0, 0, 0.12);
+}
+
+body.theme-pixel .app-shell__tabbar-rail {
+  height: 0;
+  margin: 0;
+  overflow: hidden;
+}
+
+body.theme-pixel .app-shell__tab-indicator-surface {
+  border-radius: 0;
+}
+
+body.theme-pixel .app-shell__tab--active:not(.app-shell__tab--spring) .app-shell__tab-icon {
+  transform: translate(-1px, -2px) scale(1.04);
+}
+
+body.dark.theme-pixel .app-shell__tabbar {
+  --tabbar-border: rgba(255, 255, 255, 0.35);
+  --tabbar-shadow: 0 -4px 0 rgba(255, 255, 255, 0.15), 0 -8px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* ---------- 极简线条 ---------- */
+body.theme-minimalLine .app-shell__tabbar {
+  --tabbar-radius: 0;
+  --tabbar-backdrop: none;
+  --tabbar-bg: color-mix(in srgb, var(--body-color) 96%, transparent);
+  --tabbar-border: rgba(0, 0, 0, 0.14);
+  --tabbar-rail: linear-gradient(90deg, transparent, rgba(79, 70, 229, 0.55), transparent);
+  --tabbar-pill-bg: transparent;
+  --tabbar-pill-border: rgba(79, 70, 229, 0.55);
+  --tabbar-shadow: 0 -1px 0 var(--tabbar-border), 0 -12px 24px rgba(0, 0, 0, 0.06);
+}
+
+body.theme-minimalLine .app-shell__tab-indicator-surface {
+  border-radius: 6px;
+  border-width: 2px;
+  background: color-mix(in srgb, rgba(var(--ml-accent, 79, 70, 229), 1) 8%, transparent);
+}
+
+body.dark.theme-minimalLine .app-shell__tabbar {
+  --tabbar-border: rgba(255, 255, 255, 0.14);
+  --tabbar-rail: linear-gradient(90deg, transparent, rgba(165, 180, 252, 0.65), transparent);
+  --tabbar-pill-border: rgba(165, 180, 252, 0.55);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body .app-shell__tab-indicator {
+    transition: transform 0.2s ease;
+  }
+
+  body .app-shell__tab,
+  body .app-shell__tab-icon,
+  body .app-shell__tab-label {
+    transition: none !important;
+  }
+
+  body .app-shell__tab-indicator--spring .app-shell__tab-indicator-surface,
+  body .app-shell__tab--spring .app-shell__tab-icon,
+  body .app-shell__tab--spring .app-shell__tab-label {
+    animation: none !important;
+  }
+
+  body .app-shell__tab--active:not(.app-shell__tab--spring) .app-shell__tab-icon {
+    transform: translateY(-1px) scale(1.04);
+    filter: var(--tabbar-icon-active-shadow);
+  }
+}

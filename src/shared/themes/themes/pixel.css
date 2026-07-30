@@ -1,0 +1,147 @@
+.theme-pixel .n-card,
+.theme-pixel .n-input,
+.theme-pixel .n-base-selection,
+.theme-pixel .n-tag,
+.theme-pixel .n-button,
+.theme-pixel .n-select {
+  border-radius: 0 !important;
+  image-rendering: pixelated;
+  font-family: var(--site-font-family);
+}
+
+.theme-pixel .n-button {
+  border-width: 2px;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+  transition: none;
+}
+
+.theme-pixel .n-button:hover {
+  transform: translate(1px, 1px);
+  box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.35);
+}
+
+.theme-pixel .n-button--tiny-type {
+  padding: 0 8px;
+}
+
+/* 与 naive Input 一致：边框与 inset 画在 __border 上，根节点 .n-base-selection 本身是 none */
+.theme-pixel .n-input__border,
+.theme-pixel .n-base-selection__border {
+  border-radius: 0 !important;
+  border-width: 2px !important;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.18);
+}
+
+.theme-pixel .n-base-selection-label,
+.theme-pixel .n-base-selection-input {
+  border-radius: 0 !important;
+}
+
+.theme-pixel .n-base-selection-input {
+  font-family: var(--site-font-family);
+}
+
+.theme-pixel .n-base-selection-tags {
+  border-radius: 0 !important;
+}
+
+/* 去掉下拉 hover/focus 时 state-border 的柔和外发光，避免和输入框静态 inset 不一致 */
+.theme-pixel .n-base-selection:not(.n-base-selection--disabled):hover .n-base-selection__state-border,
+.theme-pixel .n-base-selection.n-base-selection--focus .n-base-selection__state-border,
+.theme-pixel .n-base-selection.n-base-selection--active .n-base-selection__state-border {
+  box-shadow: none !important;
+}
+
+.theme-pixel .n-input:not(.n-input--disabled):hover .n-input__state-border,
+.theme-pixel .n-input.n-input--focus .n-input__state-border {
+  box-shadow: none !important;
+}
+
+.theme-pixel .n-tag {
+  border-width: 2px;
+  border-style: solid;
+  letter-spacing: 0.4px;
+}
+
+/* 下拉：外层不设投影；面板与输入框同一套直角 + inset 凹陷（不用卡片式外偏移，避免和 n-input 割裂） */
+.theme-pixel .n-select-menu {
+  margin: 4px 0;
+  box-shadow: none !important;
+}
+
+.theme-pixel .n-base-select-menu {
+  font-family: var(--site-font-family);
+  image-rendering: pixelated;
+  border-radius: 0 !important;
+  border: 2px solid var(--border-color);
+  box-sizing: border-box;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.18);
+}
+
+.theme-pixel .n-base-select-option::before {
+  border-radius: 0 !important;
+}
+
+/* 开关：直角轨道 + 块状拨钮 */
+.theme-pixel .n-switch {
+  font-family: var(--site-font-family);
+  image-rendering: pixelated;
+}
+
+.theme-pixel .n-switch .n-switch__rail {
+  border-radius: 0 !important;
+  border: 2px solid var(--border-color);
+  box-sizing: border-box;
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.18);
+}
+
+.theme-pixel .n-switch .n-switch__button {
+  border-radius: 0 !important;
+  box-shadow: 2px 2px 0 rgba(0, 0, 0, 0.35);
+}
+
+/* 深色模式：弱化金色——偏暖灰米色分层像素阴影，饱和度更低 */
+.dark.theme-pixel .n-card {
+  box-shadow: 4px 0 0 rgba(210, 192, 168, 0.38),
+  0 4px 0 rgba(228, 220, 205, 0.26),
+  8px 8px 0 rgba(148, 132, 112, 0.2),
+  0 0 18px rgba(200, 188, 170, 0.09);
+}
+
+.dark.theme-pixel .n-button {
+  box-shadow: 2px 2px 0 rgba(210, 192, 168, 0.44),
+  0 0 14px rgba(200, 190, 175, 0.12);
+}
+
+.dark.theme-pixel .n-button:hover {
+  box-shadow: 1px 1px 0 rgba(210, 192, 168, 0.38),
+  0 0 11px rgba(200, 190, 175, 0.1);
+}
+
+.dark.theme-pixel .n-input__border,
+.dark.theme-pixel .n-base-selection__border,
+.dark.theme-pixel .n-input-number .n-input__border {
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.65),
+  inset -2px -2px 0 rgba(255, 255, 255, 0.08),
+  0 0 0 1px rgba(196, 184, 168, 0.32),
+  0 0 11px rgba(188, 178, 165, 0.07);
+}
+
+.dark.theme-pixel .n-base-select-menu {
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.65),
+  inset -2px -2px 0 rgba(255, 255, 255, 0.08),
+  0 0 0 1px rgba(196, 184, 168, 0.32),
+  0 0 11px rgba(188, 178, 165, 0.07);
+}
+
+.dark.theme-pixel .n-switch .n-switch__rail {
+  box-shadow: inset 2px 2px 0 rgba(0, 0, 0, 0.65),
+  inset -2px -2px 0 rgba(255, 255, 255, 0.08),
+  0 0 0 1px rgba(196, 184, 168, 0.32),
+  0 0 11px rgba(188, 178, 165, 0.07);
+}
+
+.dark.theme-pixel .n-switch .n-switch__button {
+  box-shadow: 2px 2px 0 rgba(210, 192, 168, 0.44),
+  0 0 14px rgba(200, 190, 175, 0.12);
+}

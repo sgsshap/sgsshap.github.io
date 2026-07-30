@@ -1,0 +1,87 @@
+/* 吴：坐断东南 — 近白/墨绿灰卡片 + 极淡江绿氛围（theme-wu） */
+
+html:has(body.theme-wu:not(.dark)) {
+  --wu-accent-r: 123;
+  --wu-accent-g: 149;
+  --wu-accent-b: 91;
+  --wu-deep-r: 45;
+  --wu-deep-g: 65;
+  --wu-deep-b: 27;
+}
+
+html:has(body.dark.theme-wu) {
+  --wu-accent-r: 123;
+  --wu-accent-g: 149;
+  --wu-accent-b: 91;
+  --wu-deep-r: 197;
+  --wu-deep-g: 217;
+  --wu-deep-b: 126;
+}
+
+.theme-wu .n-layout-scroll-container,
+.theme-wu .n-layout,
+.dark.theme-wu .n-layout-scroll-container,
+.dark.theme-wu .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.theme-wu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-wu .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--wu-deep-r), var(--wu-deep-g), var(--wu-deep-b), 0.12) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 80% 46% at 12% -4%,
+      rgba(var(--wu-accent-r), var(--wu-accent-g), var(--wu-accent-b), 0.08) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 60% 50% at 92% 100%,
+      rgba(var(--wu-deep-r), var(--wu-deep-g), var(--wu-deep-b), 0.05) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.68) 0%,
+      transparent 44%,
+      rgba(var(--wu-accent-r), var(--wu-accent-g), var(--wu-accent-b), 0.025) 100%
+    );
+  box-shadow:
+    0 10px 28px -14px rgba(var(--wu-deep-r), var(--wu-deep-g), var(--wu-deep-b), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.theme-wu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-wu .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-wu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-wu .home-view__panel {
+  border-color: rgba(214, 220, 206, 0.1) !important;
+  background-image:
+    radial-gradient(
+      ellipse 70% 40% at 8% 0%,
+      rgba(var(--wu-accent-r), var(--wu-accent-g), var(--wu-accent-b), 0.09) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 50% 65% at 100% 100%,
+      rgba(var(--wu-deep-r), var(--wu-deep-g), var(--wu-deep-b), 0.06) 0%,
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.025) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.1) 100%
+    );
+  box-shadow:
+    0 14px 36px -18px rgba(0, 0, 0, 0.52),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}

@@ -1,0 +1,312 @@
+/*
+ * 弹层（Modal / Dialog / Drawer）：实底，不参与首页大卡片装饰。
+ * 水墨 / 赤壁：装饰性 .n-card 规则会误伤 preset="card" 的弹框。
+ *
+ * 注意：Naive UI preset="card" 时 DOM 为同一节点的 .n-modal.n-card，
+ * 不是 .n-modal > .n-card 父子结构。
+ */
+
+/* ========== 水墨 ========== */
+body.theme-shuimo .n-modal.n-card,
+body.theme-shuimo .n-dialog,
+body.theme-shuimo .n-drawer .n-drawer-content,
+.theme-shuimo.n-config-provider .n-modal.n-card,
+.theme-shuimo.n-config-provider .n-dialog {
+  --n-color: rgb(250, 247, 242) !important;
+  --card-color: rgb(250, 247, 242) !important;
+  --modal-color: rgb(250, 247, 242) !important;
+  --action-color: rgb(250, 247, 242) !important;
+  background-color: rgb(250, 247, 242) !important;
+  background-image: none !important;
+  border-color: rgba(42, 38, 34, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(34, 32, 32, 0.16) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-shuimo .n-modal.n-card,
+body.dark.theme-shuimo .n-dialog,
+body.dark.theme-shuimo .n-drawer .n-drawer-content,
+.dark.theme-shuimo.n-config-provider .n-modal.n-card,
+.dark.theme-shuimo.n-config-provider .n-dialog {
+  --n-color: rgb(22, 21, 26) !important;
+  --card-color: rgb(22, 21, 26) !important;
+  --modal-color: rgb(22, 21, 26) !important;
+  --action-color: rgb(22, 21, 26) !important;
+  background-color: rgb(22, 21, 26) !important;
+  background-image: none !important;
+  border-color: rgba(232, 228, 218, 0.14) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.42) !important;
+  opacity: 1 !important;
+}
+
+body.theme-shuimo .n-modal.n-card::before,
+body.theme-shuimo .n-modal.n-card::after,
+body.dark.theme-shuimo .n-modal.n-card::before,
+body.dark.theme-shuimo .n-modal.n-card::after,
+.theme-shuimo.n-config-provider .n-modal.n-card::before,
+.theme-shuimo.n-config-provider .n-modal.n-card::after,
+.dark.theme-shuimo.n-config-provider .n-modal.n-card::before,
+.dark.theme-shuimo.n-config-provider .n-modal.n-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+body.theme-shuimo .n-modal.n-card > .n-card-header,
+body.dark.theme-shuimo .n-modal.n-card > .n-card-header,
+body.theme-shuimo .n-modal.n-card > .n-card__content,
+body.dark.theme-shuimo .n-modal.n-card > .n-card__content,
+body.theme-shuimo .n-modal.n-card > .n-card__footer,
+body.dark.theme-shuimo .n-modal.n-card > .n-card__footer,
+body.theme-shuimo .n-dialog .n-dialog__title,
+body.dark.theme-shuimo .n-dialog .n-dialog__title,
+body.theme-shuimo .n-dialog .n-dialog__content,
+body.dark.theme-shuimo .n-dialog .n-dialog__content,
+body.theme-shuimo .n-dialog .n-dialog__action,
+body.dark.theme-shuimo .n-dialog .n-dialog__action {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.theme-shuimo .n-modal.n-card > .n-card-header::before,
+body.theme-shuimo .n-modal.n-card > .n-card-header::after,
+body.dark.theme-shuimo .n-modal.n-card > .n-card-header::before,
+body.dark.theme-shuimo .n-modal.n-card > .n-card-header::after,
+body.theme-shuimo .n-modal.n-card .n-card-header__main::before,
+body.dark.theme-shuimo .n-modal.n-card .n-card-header__main::before {
+  content: none !important;
+  display: none !important;
+}
+
+/* ========== 赤壁 ========== */
+body.theme-chibi .n-modal.n-card,
+body.theme-chibi .n-dialog,
+body.theme-chibi .n-drawer .n-drawer-content,
+.theme-chibi.n-config-provider .n-modal.n-card,
+.theme-chibi.n-config-provider .n-dialog {
+  --n-color: rgb(251, 252, 254) !important;
+  --card-color: rgb(251, 252, 254) !important;
+  --modal-color: rgb(251, 252, 254) !important;
+  --action-color: rgb(251, 252, 254) !important;
+  background-color: rgb(251, 252, 254) !important;
+  background-image: none !important;
+  border-color: rgba(58, 124, 154, 0.22) !important;
+  box-shadow: 0 12px 32px rgba(58, 124, 154, 0.18) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-chibi .n-modal.n-card,
+body.dark.theme-chibi .n-dialog,
+body.dark.theme-chibi .n-drawer .n-drawer-content,
+.dark.theme-chibi.n-config-provider .n-modal.n-card,
+.dark.theme-chibi.n-config-provider .n-dialog {
+  --n-color: rgb(22, 26, 36) !important;
+  --card-color: rgb(22, 26, 36) !important;
+  --modal-color: rgb(22, 26, 36) !important;
+  --action-color: rgb(22, 26, 36) !important;
+  background-color: rgb(22, 26, 36) !important;
+  background-image: none !important;
+  border-color: rgba(86, 156, 188, 0.22) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}
+
+body.theme-chibi .n-modal.n-card::before,
+body.theme-chibi .n-modal.n-card::after,
+body.dark.theme-chibi .n-modal.n-card::before,
+body.dark.theme-chibi .n-modal.n-card::after,
+.theme-chibi.n-config-provider .n-modal.n-card::before,
+.theme-chibi.n-config-provider .n-modal.n-card::after,
+.dark.theme-chibi.n-config-provider .n-modal.n-card::before,
+.dark.theme-chibi.n-config-provider .n-modal.n-card::after {
+  content: none !important;
+  display: none !important;
+}
+
+body.theme-chibi .n-modal.n-card > .n-card-header,
+body.dark.theme-chibi .n-modal.n-card > .n-card-header,
+body.theme-chibi .n-modal.n-card > .n-card__content,
+body.dark.theme-chibi .n-modal.n-card > .n-card__content,
+body.theme-chibi .n-modal.n-card > .n-card__footer,
+body.dark.theme-chibi .n-modal.n-card > .n-card__footer,
+body.theme-chibi .n-dialog .n-dialog__title,
+body.dark.theme-chibi .n-dialog .n-dialog__title,
+body.theme-chibi .n-dialog .n-dialog__content,
+body.dark.theme-chibi .n-dialog .n-dialog__content,
+body.theme-chibi .n-dialog .n-dialog__action,
+body.dark.theme-chibi .n-dialog .n-dialog__action {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+body.theme-chibi .n-modal.n-card > .n-card-header::before,
+body.theme-chibi .n-modal.n-card > .n-card-header::after,
+body.dark.theme-chibi .n-modal.n-card > .n-card-header::before,
+body.dark.theme-chibi .n-modal.n-card > .n-card-header::after {
+  content: none !important;
+  display: none !important;
+}
+
+/* ========== 蜀 ========== */
+body.theme-shu .n-modal.n-card,
+body.theme-shu .n-dialog,
+body.theme-shu .n-drawer .n-drawer-content,
+.theme-shu.n-config-provider .n-modal.n-card,
+.theme-shu.n-config-provider .n-dialog {
+  --n-color: rgb(252, 251, 250) !important;
+  --card-color: rgb(252, 251, 250) !important;
+  --modal-color: rgb(252, 251, 250) !important;
+  --action-color: rgb(252, 251, 250) !important;
+  background-color: rgb(252, 251, 250) !important;
+  background-image: none !important;
+  border-color: rgba(122, 37, 40, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(122, 37, 40, 0.1) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-shu .n-modal.n-card,
+body.dark.theme-shu .n-dialog,
+body.dark.theme-shu .n-drawer .n-drawer-content,
+.dark.theme-shu.n-config-provider .n-modal.n-card,
+.dark.theme-shu.n-config-provider .n-dialog {
+  --n-color: rgb(38, 36, 38) !important;
+  --card-color: rgb(38, 36, 38) !important;
+  --modal-color: rgb(38, 36, 38) !important;
+  --action-color: rgb(38, 36, 38) !important;
+  background-color: rgb(38, 36, 38) !important;
+  background-image: none !important;
+  border-color: rgba(232, 218, 212, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}
+
+/* ========== 吴 ========== */
+body.theme-wu .n-modal.n-card,
+body.theme-wu .n-dialog,
+body.theme-wu .n-drawer .n-drawer-content,
+.theme-wu.n-config-provider .n-modal.n-card,
+.theme-wu.n-config-provider .n-dialog {
+  --n-color: rgb(249, 250, 247) !important;
+  --card-color: rgb(249, 250, 247) !important;
+  --modal-color: rgb(249, 250, 247) !important;
+  --action-color: rgb(249, 250, 247) !important;
+  background-color: rgb(249, 250, 247) !important;
+  background-image: none !important;
+  border-color: rgba(45, 65, 27, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(45, 65, 27, 0.08) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-wu .n-modal.n-card,
+body.dark.theme-wu .n-dialog,
+body.dark.theme-wu .n-drawer .n-drawer-content,
+.dark.theme-wu.n-config-provider .n-modal.n-card,
+.dark.theme-wu.n-config-provider .n-dialog {
+  --n-color: rgb(36, 38, 36) !important;
+  --card-color: rgb(36, 38, 36) !important;
+  --modal-color: rgb(36, 38, 36) !important;
+  --action-color: rgb(36, 38, 36) !important;
+  background-color: rgb(36, 38, 36) !important;
+  background-image: none !important;
+  border-color: rgba(214, 220, 206, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}
+
+/* ========== 魏 ========== */
+body.theme-wei .n-modal.n-card,
+body.theme-wei .n-dialog,
+body.theme-wei .n-drawer .n-drawer-content,
+.theme-wei.n-config-provider .n-modal.n-card,
+.theme-wei.n-config-provider .n-dialog {
+  --n-color: rgb(251, 252, 254) !important;
+  --card-color: rgb(251, 252, 254) !important;
+  --modal-color: rgb(251, 252, 254) !important;
+  --action-color: rgb(251, 252, 254) !important;
+  background-color: rgb(251, 252, 254) !important;
+  background-image: none !important;
+  border-color: rgba(79, 102, 127, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(79, 102, 127, 0.1) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-wei .n-modal.n-card,
+body.dark.theme-wei .n-dialog,
+body.dark.theme-wei .n-drawer .n-drawer-content,
+.dark.theme-wei.n-config-provider .n-modal.n-card,
+.dark.theme-wei.n-config-provider .n-dialog {
+  --n-color: rgb(36, 38, 42) !important;
+  --card-color: rgb(36, 38, 42) !important;
+  --modal-color: rgb(36, 38, 42) !important;
+  --action-color: rgb(36, 38, 42) !important;
+  background-color: rgb(36, 38, 42) !important;
+  background-image: none !important;
+  border-color: rgba(208, 216, 226, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}
+
+/* ========== 群 ========== */
+body.theme-qun .n-modal.n-card,
+body.theme-qun .n-dialog,
+body.theme-qun .n-drawer .n-drawer-content,
+.theme-qun.n-config-provider .n-modal.n-card,
+.theme-qun.n-config-provider .n-dialog {
+  --n-color: rgb(252, 252, 252) !important;
+  --card-color: rgb(252, 252, 252) !important;
+  --modal-color: rgb(252, 252, 252) !important;
+  --action-color: rgb(252, 252, 252) !important;
+  background-color: rgb(252, 252, 252) !important;
+  background-image: none !important;
+  border-color: rgba(10, 10, 12, 0.1) !important;
+  box-shadow: 0 12px 32px rgba(10, 10, 12, 0.08) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-qun .n-modal.n-card,
+body.dark.theme-qun .n-dialog,
+body.dark.theme-qun .n-drawer .n-drawer-content,
+.dark.theme-qun.n-config-provider .n-modal.n-card,
+.dark.theme-qun.n-config-provider .n-dialog {
+  --n-color: rgb(34, 34, 36) !important;
+  --card-color: rgb(34, 34, 36) !important;
+  --modal-color: rgb(34, 34, 36) !important;
+  --action-color: rgb(34, 34, 36) !important;
+  background-color: rgb(34, 34, 36) !important;
+  background-image: none !important;
+  border-color: rgba(238, 238, 240, 0.1) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}
+
+/* ========== 晋 ========== */
+body.theme-jin .n-modal.n-card,
+body.theme-jin .n-dialog,
+body.theme-jin .n-drawer .n-drawer-content,
+.theme-jin.n-config-provider .n-modal.n-card,
+.theme-jin.n-config-provider .n-dialog {
+  --n-color: rgb(251, 250, 254) !important;
+  --card-color: rgb(251, 250, 254) !important;
+  --modal-color: rgb(251, 250, 254) !important;
+  --action-color: rgb(251, 250, 254) !important;
+  background-color: rgb(251, 250, 254) !important;
+  background-image: none !important;
+  border-color: rgba(88, 78, 126, 0.12) !important;
+  box-shadow: 0 12px 32px rgba(88, 78, 126, 0.1) !important;
+  opacity: 1 !important;
+}
+
+body.dark.theme-jin .n-modal.n-card,
+body.dark.theme-jin .n-dialog,
+body.dark.theme-jin .n-drawer .n-drawer-content,
+.dark.theme-jin.n-config-provider .n-modal.n-card,
+.dark.theme-jin.n-config-provider .n-dialog {
+  --n-color: rgb(38, 36, 44) !important;
+  --card-color: rgb(38, 36, 44) !important;
+  --modal-color: rgb(38, 36, 44) !important;
+  --action-color: rgb(38, 36, 44) !important;
+  background-color: rgb(38, 36, 44) !important;
+  background-image: none !important;
+  border-color: rgba(218, 214, 232, 0.12) !important;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.45) !important;
+  opacity: 1 !important;
+}

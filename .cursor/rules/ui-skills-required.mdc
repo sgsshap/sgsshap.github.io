@@ -1,0 +1,30 @@
+---
+description: UI 页面/组件/样式工作时强制读取 ui-preferences 与 frontend-design
+alwaysApply: true
+---
+
+# UI 实现：强制 Skill 工作流
+
+当任务涉及以下**任一**情况时，**必须先读取 skill、再写代码**（不得跳过）：
+
+- 新建 / 重构 **页面、View、路由页、区块、抽屉、表单**
+- 新建 / 改造 **组件**（含 `shared/components`）
+- 修改 **样式、布局、排版、动效、主题、CSS**
+- 用户提到：重构页面、改 UI、做界面、样式、设计、美化
+
+## 强制读取顺序（Canonical 在 `.skills/`）
+
+1. [`.skills/ui-preferences/SKILL.md`](../../.skills/ui-preferences/SKILL.md) → [`.skills/ui-preferences/preferences.md`](../../.skills/ui-preferences/preferences.md)
+2. [`.skills/frontend-design/SKILL.md`](../../.skills/frontend-design/SKILL.md)
+
+冲突以 **ui-preferences** 为准。维护时 **只改 `.skills/`**，勿在工具入口写长文。
+
+## 执行要点
+
+- 从模式库 **组合**（如 `page-head-compact` + `section-panel`）
+- 审美决策 → 更新 `.skills/ui-preferences/preferences.md` 变更记录
+- 文案：`.skills/project-glossary/` · 工程：`.skills/vue3-standards/`
+
+## 全工具说明
+
+见 [`.skills/README.md`](../../.skills/README.md)

@@ -1,0 +1,113 @@
+/**
+ * 百科详情（WikiView 内嵌面板）
+ * 与列表页共用 --page-* token；section 竖条对齐模式库 section-panel
+ */
+.wiki-view__detail-body {
+  --page-p: 24px;
+  --page-inset: 18px;
+  --page-gap: 16px;
+  --page-r: 12px;
+  --page-p-top: calc(var(--page-p) - 8px);
+  padding: var(--page-p-top) var(--page-p) var(--page-p);
+}
+
+.wiki-view__detail-body .legend-detail-panel,
+.wiki-view__detail-body .skill-detail-panel,
+.wiki-view__detail-body .image-detail-panel {
+  padding-top: 0;
+}
+
+.wiki-view__detail-body .diy-drawer-page-title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 1.32;
+  color: var(--text-color-base);
+}
+
+.wiki-view__detail-body .wiki-detail-eyebrow {
+  margin: 0 0 8px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--primary-color);
+}
+
+.wiki-view__detail-body .diy-drawer-section-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+  font-size: 19px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-color-base);
+}
+
+.wiki-view__detail-body .diy-drawer-section-title::before {
+  content: '';
+  width: 5px;
+  height: 1.1em;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--primary-color) 0%,
+    color-mix(in srgb, var(--primary-color) 55%, transparent) 100%
+  );
+}
+
+.wiki-view__detail-body .diy-drawer-section-title--accent {
+  padding-left: 0;
+  border-left: none;
+}
+
+.wiki-view__detail-body .diy-drawer-section-title--muted {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-color-2);
+}
+
+.wiki-view__detail-body .diy-drawer-section-title--muted::before {
+  height: 0.95em;
+  opacity: 0.55;
+}
+
+.wiki-view__detail-body .wiki-detail-inset,
+.wiki-view__detail-body .skill-detail-panel__legend-links {
+  padding: calc(var(--page-inset) - 4px) var(--page-inset) var(--page-inset);
+  border-radius: calc(var(--page-r) - 2px);
+  background: color-mix(in srgb, var(--body-color) 48%, var(--card-color));
+  border: 1px solid color-mix(in srgb, var(--primary-color) 12%, var(--border-color));
+}
+
+.wiki-view__detail-body .legend-detail-panel__intro {
+  padding: 10px 14px 12px;
+}
+
+.wiki-view__detail-body .legend-detail-panel__version-chrome {
+  padding: 12px 14px 14px;
+}
+
+.wiki-view__detail-body .wiki-detail-section-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 12px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+@media (max-width: 640px) {
+  .wiki-view__detail-body {
+    --page-p: 18px;
+    --page-inset: 14px;
+    --page-p-top: calc(var(--page-p) - 6px);
+    padding: var(--page-p-top) var(--page-p) var(--page-p);
+  }
+
+  .wiki-view__detail-body .diy-drawer-page-title {
+    font-size: 20px;
+  }
+}

@@ -1,0 +1,47 @@
+/**
+ * DIY 制图页随视口高度微调（仅压高度，不压横向 gap）
+ *
+ * 以 900px 视口高度为基准 1:1，矮屏按 vh 线性缩小。
+ * 不用 calc(100vh / 900px)（两长度相除得无量纲比值，旧版 WebKit 等不支持）。
+ */
+.diy-card-pc,
+.diy-card-mobile {
+  /* 表单项间距 & 预览区 stage 子块纵向间距共用；键盘弹起时随 visualViewport 收缩 */
+  --diy-viewport-density-base: var(--app-viewport-height, 100vh);
+  --diy-form-feedback-height: clamp(15px, calc(var(--diy-viewport-density-base) * 24 / 900), 24px);
+  --diy-form-control-height: clamp(28px, calc(var(--diy-viewport-density-base) * 32 / 900), 32px);
+  --diy-collapse-header-pad-y: clamp(5px, calc(var(--diy-viewport-density-base) * 10 / 900), 10px);
+  --diy-chrome-btn-height: clamp(26px, calc(var(--diy-viewport-density-base) * 32 / 900), 32px);
+  --diy-hint-pad-y: clamp(4px, calc(var(--diy-viewport-density-base) * 8 / 900), 8px);
+}
+
+/*
+ * 表单项间距：Naive FormItem 用内联 style 写 --n-feedback-height，须 !important；
+ * 并直接压 feedback-wrapper 的 min-height，避免内联变量盖掉继承。
+ */
+.diy-card-pc .n-form-item,
+.diy-card-mobile .n-form-item {
+  --n-feedback-height: var(--diy-form-feedback-height) !important;
+}
+
+.diy-card-pc .n-form-item .n-form-item-feedback-wrapper,
+.diy-card-mobile .n-form-item .n-form-item-feedback-wrapper {
+  min-height: var(--diy-form-feedback-height) !important;
+}
+
+.diy-card-pc .n-input,
+.diy-card-mobile .n-input,
+.diy-card-pc .n-input-number,
+.diy-card-mobile .n-input-number,
+.diy-card-pc .n-base-selection,
+.diy-card-mobile .n-base-selection {
+  --n-height: var(--diy-form-control-height);
+}
+
+/* 画布下方三行：只压行高 */
+.diy-card-pc .diy-history-bar .n-button,
+.diy-card-mobile .diy-history-bar .n-button,
+.diy-card-pc .diy-preview-bar__toolbar .n-button,
+.diy-card-mobile .diy-preview-bar__toolbar .n-button {
+  --n-height: var(--diy-chrome-btn-height);
+}

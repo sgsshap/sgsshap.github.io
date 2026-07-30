@@ -1,0 +1,488 @@
+/* 极简线条：工程网格底 + 线框组件（theme-minimalLine） */
+
+:root {
+  /* primary：靛紫；info：亮青（色相拉开，避免同为「蓝」系） */
+  --ml-accent: 79, 70, 229;
+  --ml-accent-dark: 165, 180, 252;
+  --ml-info: 8, 145, 178;
+  --ml-info-dark: 34, 211, 238;
+  /* 按钮线宽：主按钮更扎实；secondary 更轻量 */
+  --ml-btn-stroke-main: 2px;
+  --ml-btn-stroke-secondary: 1px;
+}
+
+html:has(body.theme-minimalLine:not(.dark)) {
+  background-color: rgb(250, 250, 250);
+  background-image: linear-gradient(rgba(0, 0, 0, 0.045) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(0, 0, 0, 0.045) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  color-scheme: light;
+}
+
+html:has(body.dark.theme-minimalLine) {
+  background-color: rgb(12, 12, 15);
+  background-image: linear-gradient(rgba(255, 255, 255, 0.055) 1px, transparent 1px),
+  linear-gradient(90deg, rgba(255, 255, 255, 0.055) 1px, transparent 1px);
+  background-size: 28px 28px;
+  background-position: -1px -1px;
+  color-scheme: dark;
+}
+
+body.theme-minimalLine {
+  background-color: transparent;
+}
+
+body.theme-minimalLine > #app {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-minimalLine.n-config-provider {
+  background: transparent !important;
+}
+
+.theme-minimalLine .n-layout-scroll-container,
+.theme-minimalLine .n-layout,
+.dark.theme-minimalLine .n-layout-scroll-container,
+.dark.theme-minimalLine .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+/* ---------- Card：纯线框 + 同心圆线装饰（一角弧栅） ---------- */
+.theme-minimalLine .n-card {
+  position: relative;
+  overflow: hidden;
+  border-radius: 4px !important;
+  border: 1px solid rgba(0, 0, 0, 0.12) !important;
+  box-shadow: none !important;
+}
+
+.theme-minimalLine .n-card::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: 0.92;
+  /* 圆心在卡片外上沿偏右，仅内侧露出同心圆弧 */
+  --ml-card-ring-cx: calc(100% + 18px);
+  --ml-card-ring-cy: -18px;
+  --ml-card-ring-cx2: -18px;
+  --ml-card-ring-cy2: calc(100% + 18px);
+  background-image: radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 71px,
+    rgba(0, 0, 0, 0.055) 71px 72px,
+    transparent 72px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 53px,
+    rgba(0, 0, 0, 0.048) 53px 54px,
+    transparent 54px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 35px,
+    rgba(0, 0, 0, 0.042) 35px 36px,
+    transparent 36px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 17px,
+    rgba(0, 0, 0, 0.036) 17px 18px,
+    transparent 18px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx2) var(--ml-card-ring-cy2),
+    transparent 44px,
+    rgba(0, 0, 0, 0.036) 44px 45px,
+    transparent 45px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx2) var(--ml-card-ring-cy2),
+    transparent 26px,
+    rgba(0, 0, 0, 0.03) 26px 27px,
+    transparent 27px
+  );
+}
+
+.theme-minimalLine .n-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-minimalLine .n-card {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.dark.theme-minimalLine .n-card::before {
+  background-image: radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 71px,
+    rgba(255, 255, 255, 0.065) 71px 72px,
+    transparent 72px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 53px,
+    rgba(255, 255, 255, 0.055) 53px 54px,
+    transparent 54px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 35px,
+    rgba(255, 255, 255, 0.048) 35px 36px,
+    transparent 36px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx) var(--ml-card-ring-cy),
+    transparent 17px,
+    rgba(255, 255, 255, 0.042) 17px 18px,
+    transparent 18px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx2) var(--ml-card-ring-cy2),
+    transparent 44px,
+    rgba(255, 255, 255, 0.048) 44px 45px,
+    transparent 45px
+  ),
+  radial-gradient(
+    circle at var(--ml-card-ring-cx2) var(--ml-card-ring-cy2),
+    transparent 26px,
+    rgba(255, 255, 255, 0.038) 26px 27px,
+    transparent 27px
+  );
+}
+
+.theme-minimalLine .n-card.n-card--bordered {
+  box-shadow: none !important;
+}
+
+/*
+ * 按钮：全线框、无填充（覆盖 Naive 内联 --n-color*）
+ * 不含 text / ghost / tertiary / quaternary（本身无边或为文字按钮）
+ * 线宽：非 secondary → --ml-btn-stroke-main；secondary → --ml-btn-stroke-secondary（本体描边）
+ */
+.theme-minimalLine .n-button:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--tertiary):not(.n-button--quaternary) {
+  --n-color: transparent !important;
+  --n-color-hover: transparent !important;
+  --n-color-pressed: transparent !important;
+  --n-color-focus: transparent !important;
+  background-image: none !important;
+}
+
+.theme-minimalLine .n-button:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--tertiary):not(.n-button--quaternary):not(.n-button--secondary) {
+  background-color: rgba(24, 24, 28, 0.035) !important;
+  border-width: var(--ml-btn-stroke-main) !important;
+  font-weight: 600 !important;
+}
+
+.dark.theme-minimalLine .n-button:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--tertiary):not(.n-button--quaternary):not(.n-button--secondary) {
+  background-color: rgba(236, 236, 240, 0.07) !important;
+}
+
+.theme-minimalLine .n-button:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):hover,
+.theme-minimalLine .n-button:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):focus {
+  transform: none !important;
+}
+
+/* Default：中性线框 + 正文色字（主描边） */
+.theme-minimalLine .n-button--default-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(24, 24, 28, 0.34) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.52) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.62) !important;
+}
+
+.dark.theme-minimalLine .n-button--default-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(236, 236, 240, 0.38) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.52) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.62) !important;
+}
+
+/* Primary：靛紫描边（主操作） */
+.theme-minimalLine .n-button--primary-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.72) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.92) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.58) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent), 0.95) !important;
+  --n-text-color: rgb(var(--ml-accent)) !important;
+  --n-text-color-hover: rgb(67, 56, 202) !important;
+  --n-text-color-pressed: rgb(55, 48, 163) !important;
+  --n-text-color-focus: rgb(var(--ml-accent)) !important;
+}
+
+.theme-minimalLine .n-button--tiny-type {
+  padding: 0 8px;
+}
+
+.dark.theme-minimalLine .n-button--primary-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.68) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.88) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.52) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-accent-dark), 0.92) !important;
+  --n-text-color: rgb(var(--ml-accent-dark)) !important;
+  --n-text-color-hover: rgb(199, 210, 254) !important;
+  --n-text-color-pressed: rgb(165, 180, 252) !important;
+  --n-text-color-focus: rgb(var(--ml-accent-dark)) !important;
+}
+
+/* Info：亮青描边（信息态，与 primary 紫拉开） */
+.theme-minimalLine .n-button--info-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(var(--ml-info), 0.72) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-info), 0.92) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-info), 0.55) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-info), 0.95) !important;
+  --n-text-color: rgb(var(--ml-info)) !important;
+  --n-text-color-hover: rgb(14, 116, 144) !important;
+  --n-text-color-pressed: rgb(21, 94, 117) !important;
+  --n-text-color-focus: rgb(var(--ml-info)) !important;
+}
+
+.dark.theme-minimalLine .n-button--info-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(var(--ml-info-dark), 0.68) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(var(--ml-info-dark), 0.88) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(var(--ml-info-dark), 0.52) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(var(--ml-info-dark), 0.92) !important;
+  --n-text-color: rgb(var(--ml-info-dark)) !important;
+  --n-text-color-hover: rgb(103, 232, 249) !important;
+  --n-text-color-pressed: rgb(67, 206, 234) !important;
+  --n-text-color-focus: rgb(var(--ml-info-dark)) !important;
+}
+
+.theme-minimalLine .n-button--success-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(22, 120, 102, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(22, 120, 102, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(22, 120, 102, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(22, 120, 102, 0.78) !important;
+  --n-text-color: rgb(22, 120, 102) !important;
+  --n-text-color-hover: rgb(18, 99, 84) !important;
+  --n-text-color-pressed: rgb(16, 88, 75) !important;
+  --n-text-color-focus: rgb(22, 120, 102) !important;
+}
+
+.dark.theme-minimalLine .n-button--success-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(52, 188, 164, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(52, 188, 164, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(52, 188, 164, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(52, 188, 164, 0.78) !important;
+  --n-text-color: rgb(52, 188, 164) !important;
+  --n-text-color-hover: rgb(94, 206, 186) !important;
+  --n-text-color-pressed: rgb(76, 196, 174) !important;
+  --n-text-color-focus: rgb(52, 188, 164) !important;
+}
+
+.theme-minimalLine .n-button--warning-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(180, 120, 20, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(180, 120, 20, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(180, 120, 20, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(180, 120, 20, 0.78) !important;
+  --n-text-color: rgb(160, 105, 15) !important;
+  --n-text-color-hover: rgb(140, 92, 12) !important;
+  --n-text-color-pressed: rgb(124, 82, 10) !important;
+  --n-text-color-focus: rgb(160, 105, 15) !important;
+}
+
+.dark.theme-minimalLine .n-button--warning-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(232, 176, 72, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(232, 176, 72, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(232, 176, 72, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(232, 176, 72, 0.78) !important;
+  --n-text-color: rgb(232, 176, 72) !important;
+  --n-text-color-hover: rgb(240, 194, 112) !important;
+  --n-text-color-pressed: rgb(236, 188, 96) !important;
+  --n-text-color-focus: rgb(232, 176, 72) !important;
+}
+
+.theme-minimalLine .n-button--error-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(200, 48, 52, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(200, 48, 52, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(200, 48, 52, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(200, 48, 52, 0.78) !important;
+  --n-text-color: rgb(200, 48, 52) !important;
+  --n-text-color-hover: rgb(176, 42, 46) !important;
+  --n-text-color-pressed: rgb(158, 38, 42) !important;
+  --n-text-color-focus: rgb(200, 48, 52) !important;
+}
+
+.dark.theme-minimalLine .n-button--error-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost):not(.n-button--secondary) {
+  --n-border: var(--ml-btn-stroke-main) solid rgba(248, 113, 113, 0.52) !important;
+  --n-border-hover: var(--ml-btn-stroke-main) solid rgba(248, 113, 113, 0.72) !important;
+  --n-border-pressed: var(--ml-btn-stroke-main) solid rgba(248, 113, 113, 0.42) !important;
+  --n-border-focus: var(--ml-btn-stroke-main) solid rgba(248, 113, 113, 0.78) !important;
+  --n-text-color: rgb(248, 113, 113) !important;
+  --n-text-color-hover: rgb(252, 141, 141) !important;
+  --n-text-color-pressed: rgb(250, 129, 129) !important;
+  --n-text-color-focus: rgb(248, 113, 113) !important;
+}
+
+/*
+ * secondary：弱化为轻边框 + 透明底，降低视觉优先级
+ */
+.theme-minimalLine .n-button--secondary:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  background-color: rgba(24, 24, 28, 0.035) !important;
+  border-style: solid !important;
+  border-width: var(--ml-btn-stroke-secondary) !important;
+  box-shadow: none !important;
+  font-weight: 500 !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  background-color: rgba(236, 236, 240, 0.065) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--default-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(24, 24, 28, 0.34) !important;
+  color: rgba(24, 24, 28, 0.9) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--default-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(236, 236, 240, 0.4) !important;
+  color: rgba(236, 236, 240, 0.9) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--primary-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(var(--ml-accent), 0.66) !important;
+  color: rgba(var(--ml-accent), 0.88) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--primary-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(var(--ml-accent-dark), 0.62) !important;
+  color: rgba(var(--ml-accent-dark), 0.86) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--info-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(var(--ml-info), 0.66) !important;
+  color: rgba(var(--ml-info), 0.88) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--info-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) solid rgba(var(--ml-info-dark), 0.62) !important;
+  color: rgba(var(--ml-info-dark), 0.86) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--success-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(22, 120, 102, 0.4) !important;
+  color: rgba(22, 120, 102, 0.66) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--success-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(52, 188, 164, 0.4) !important;
+  color: rgba(52, 188, 164, 0.66) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--warning-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(180, 120, 20, 0.4) !important;
+  color: rgba(160, 105, 15, 0.7) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--warning-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(232, 176, 72, 0.4) !important;
+  color: rgba(232, 176, 72, 0.68) !important;
+}
+
+.theme-minimalLine .n-button--secondary.n-button--error-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(200, 48, 52, 0.4) !important;
+  color: rgba(200, 48, 52, 0.68) !important;
+}
+
+.dark.theme-minimalLine .n-button--secondary.n-button--error-type:not(.n-button--disabled):not(.n-button--text):not(.n-button--ghost) {
+  border: var(--ml-btn-stroke-secondary) dashed rgba(248, 113, 113, 0.4) !important;
+  color: rgba(248, 113, 113, 0.68) !important;
+}
+
+/* ---------- Input / Select：直角细框 + 主色（靛紫）焦点 ---------- */
+.theme-minimalLine .n-input .n-input__border,
+.theme-minimalLine .n-base-selection .n-base-selection__border {
+  border-radius: 2px !important;
+  border-width: 1px !important;
+  border-style: solid !important;
+  border-color: rgba(0, 0, 0, 0.18) !important;
+  box-shadow: none !important;
+}
+
+.dark.theme-minimalLine .n-input .n-input__border,
+.dark.theme-minimalLine .n-base-selection .n-base-selection__border {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.theme-minimalLine .n-input.n-input--focus .n-input__state-border,
+.theme-minimalLine .n-base-selection.n-base-selection--focus .n-base-selection__state-border {
+  border-radius: 2px !important;
+  box-shadow: 0 0 0 1px rgba(var(--ml-accent), 0.85),
+  inset 0 -2px 0 0 rgba(var(--ml-accent), 0.95) !important;
+}
+
+.dark.theme-minimalLine .n-input.n-input--focus .n-input__state-border,
+.dark.theme-minimalLine .n-base-selection.n-base-selection--focus .n-base-selection__state-border {
+  box-shadow: 0 0 0 1px rgba(var(--ml-accent-dark), 0.75),
+  inset 0 -2px 0 0 rgba(var(--ml-accent-dark), 0.85) !important;
+}
+
+/* ---------- 下拉面板 ---------- */
+.theme-minimalLine .n-base-select-menu {
+  border-radius: 4px !important;
+  border: 1px solid rgba(0, 0, 0, 0.14) !important;
+  box-shadow: none !important;
+}
+
+.dark.theme-minimalLine .n-base-select-menu {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* ---------- Tag：线框标签 ---------- */
+.theme-minimalLine .n-tag {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-radius: 2px !important;
+  box-shadow: none !important;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+}
+
+.dark.theme-minimalLine .n-tag {
+  box-shadow: none !important;
+}
+
+/* ---------- Switch：窄轨 + 方钮 ---------- */
+.theme-minimalLine .n-switch .n-switch__rail {
+  border-radius: 2px !important;
+  border: 1px solid rgba(0, 0, 0, 0.2) !important;
+  box-shadow: none !important;
+}
+
+.dark.theme-minimalLine .n-switch .n-switch__rail {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+}
+
+.theme-minimalLine .n-switch .n-switch__button {
+  border-radius: 1px !important;
+  box-shadow: none !important;
+}
+
+.theme-minimalLine .n-switch.n-switch--active .n-switch__rail {
+  border-color: rgba(var(--ml-accent), 0.65) !important;
+}
+
+.dark.theme-minimalLine .n-switch.n-switch--active .n-switch__rail {
+  background: color-mix(in srgb, var(--primary-color) 48%, #141414 52%) !important;
+  border-color: color-mix(in srgb, var(--primary-color) 32%, rgba(255, 255, 255, 0.16)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.06) !important;
+}
+
+/* ---------- Divider：实线 ---------- */
+.theme-minimalLine .n-divider:not(.n-divider--vertical) .n-divider__line {
+  height: 1px !important;
+  border-radius: 0 !important;
+  background: rgba(0, 0, 0, 0.1) !important;
+  border: none !important;
+}
+
+.dark.theme-minimalLine .n-divider:not(.n-divider--vertical) .n-divider__line {
+  background: rgba(255, 255, 255, 0.12) !important;
+}

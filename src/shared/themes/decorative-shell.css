@@ -1,0 +1,24 @@
+/*
+ * 纹样主题（水墨 / 山海 / 极简线条）：背景画在 html/body 伪元素上。
+ * AppShell 若使用 Naive 的不透明 --body-color，会整屏盖住纹样。
+ */
+body.theme-shuimo .app-shell,
+body.theme-shanhai .app-shell,
+body.theme-minimalLine .app-shell,
+body.theme-shuimo .app-shell__main,
+body.theme-shanhai .app-shell__main,
+body.theme-minimalLine .app-shell__main {
+  background: transparent !important;
+}
+
+body.theme-minimalLine .app-shell__sider {
+  background: color-mix(in srgb, var(--card-color) 90%, transparent) !important;
+}
+
+body.theme-minimalLine .app-shell__sider .n-layout-toggle-button {
+  background: color-mix(in srgb, var(--card-color) 92%, transparent) !important;
+}
+
+body.theme-minimalLine .app-shell__sider .n-layout-toggle-button:hover {
+  background: color-mix(in srgb, var(--primary-color) 10%, var(--card-color)) !important;
+}

@@ -1,0 +1,77 @@
+/* 群：汉失其鹿 — 近白/墨灰卡片 + 极淡中性氛围（theme-qun） */
+
+html:has(body.theme-qun:not(.dark)) {
+  --qun-accent-r: 74;
+  --qun-accent-g: 74;
+  --qun-accent-b: 78;
+  --qun-deep-r: 10;
+  --qun-deep-g: 10;
+  --qun-deep-b: 12;
+}
+
+html:has(body.dark.theme-qun) {
+  --qun-accent-r: 156;
+  --qun-accent-g: 156;
+  --qun-accent-b: 162;
+  --qun-deep-r: 238;
+  --qun-deep-g: 238;
+  --qun-deep-b: 240;
+}
+
+.theme-qun .n-layout-scroll-container,
+.theme-qun .n-layout,
+.dark.theme-qun .n-layout-scroll-container,
+.dark.theme-qun .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.theme-qun .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-qun .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--qun-deep-r), var(--qun-deep-g), var(--qun-deep-b), 0.1) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 82% 46% at 50% -5%,
+      rgba(var(--qun-accent-r), var(--qun-accent-g), var(--qun-accent-b), 0.06) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.75) 0%,
+      transparent 44%,
+      rgba(var(--qun-accent-r), var(--qun-accent-g), var(--qun-accent-b), 0.02) 100%
+    );
+  box-shadow:
+    0 10px 28px -14px rgba(var(--qun-deep-r), var(--qun-deep-g), var(--qun-deep-b), 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.68);
+}
+
+.theme-qun .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-qun .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-qun .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-qun .home-view__panel {
+  border-color: rgba(var(--qun-deep-r), var(--qun-deep-g), var(--qun-deep-b), 0.08) !important;
+  background-image:
+    radial-gradient(
+      ellipse 72% 40% at 50% 0%,
+      rgba(var(--qun-accent-r), var(--qun-accent-g), var(--qun-accent-b), 0.07) 0%,
+      transparent 55%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.025) 0%,
+      transparent 50%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+  box-shadow:
+    0 14px 36px -18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}

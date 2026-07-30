@@ -1,0 +1,212 @@
+@import "@/shared/styles/variable.css";
+@import "@/shared/styles/safe-viewport.css";
+@import "@/features/diy-card/styles/panel-card.css";
+@import "@/features/diy-card/styles/diy-config-panel.css";
+@import "@/features/diy-card/styles/drawer-layout.css";
+@import "@/features/diy-card/styles/viewport-density.css";
+@import "@/features/diy-card/styles/wiki-skill-desc.css";
+@import "@/shared/styles/wiki-detail-panel.css";
+
+:root {
+  --site-font-family: "霞鹜文楷", "KaiTi", "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+
+html,
+body,
+#app {
+  font-family: var(--site-font-family);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.28) transparent;
+}
+
+.n-layout-scroll-container,
+.n-drawer-content,
+.n-modal-scroll-content {
+  scrollbar-width: thin;
+  scrollbar-color: rgba(0, 0, 0, 0.28) transparent;
+}
+
+body {
+  --diy-card-max-width: 640px;
+}
+
+*::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.n-layout-scroll-container::-webkit-scrollbar,
+.n-drawer-content::-webkit-scrollbar,
+.n-modal-scroll-content::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+*::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.n-layout-scroll-container::-webkit-scrollbar-track,
+.n-drawer-content::-webkit-scrollbar-track,
+.n-modal-scroll-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.28);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 180ms ease,
+  border-color 180ms ease,
+  box-shadow 220ms ease;
+}
+
+.n-layout-scroll-container::-webkit-scrollbar-thumb,
+.n-drawer-content::-webkit-scrollbar-thumb,
+.n-modal-scroll-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.28);
+  border-radius: 999px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+  transition: background-color 180ms ease,
+  border-color 180ms ease,
+  box-shadow 220ms ease;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.42);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+.n-layout-scroll-container::-webkit-scrollbar-thumb:hover,
+.n-drawer-content::-webkit-scrollbar-thumb:hover,
+.n-modal-scroll-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.42);
+  box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.08);
+}
+
+*::-webkit-scrollbar-thumb:active {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.n-layout-scroll-container::-webkit-scrollbar-thumb:active,
+.n-drawer-content::-webkit-scrollbar-thumb:active,
+.n-modal-scroll-content::-webkit-scrollbar-thumb:active {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.n-base-selection .n-base-selection-label {
+  background-color: transparent;
+}
+
+/* Switch 文案防串色：激活态只显示 checked，未激活只显示 unchecked */
+.n-switch .n-switch__checked,
+.n-switch .n-switch__unchecked {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  line-height: 1;
+  transition: opacity 140ms ease, color 140ms ease;
+}
+
+.n-switch:not(.n-switch--active) .n-switch__unchecked {
+  color: rgba(0, 0, 0, 0.58);
+}
+
+.n-switch.n-switch--active .n-switch__checked {
+  color: rgba(255, 255, 255, 0.98);
+}
+
+.n-switch.n-switch--active .n-switch__checked {
+  opacity: 1;
+}
+
+.n-switch.n-switch--active .n-switch__unchecked {
+  opacity: 0;
+}
+
+.n-switch:not(.n-switch--active) .n-switch__checked {
+  opacity: 0;
+}
+
+.n-switch:not(.n-switch--active) .n-switch__unchecked {
+  opacity: 1;
+}
+
+/* 深色模式：开启态提高轨道与文案对比度（主题层 gradient 之上兜底） */
+.dark .n-switch:not(.n-switch--active) .n-switch__unchecked {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.dark .n-switch.n-switch--active .n-switch__checked {
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.dark .n-switch:not(.n-switch--disabled).n-switch--active .n-switch__rail {
+  background: color-mix(in srgb, var(--primary-color) 52%, #1a1a1a 48%) !important;
+  background-image: none !important;
+  border-color: color-mix(in srgb, var(--primary-color) 38%, rgba(255, 255, 255, 0.14)) !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.28) !important;
+}
+
+.dark .n-switch:not(.n-switch--disabled):not(.n-switch--active) .n-switch__rail {
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.dark .n-switch:not(.n-switch--disabled).n-switch--active .n-switch__button {
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.12) !important;
+}
+
+@media (prefers-color-scheme: dark) {
+  * {
+    scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+  }
+
+  .n-layout-scroll-container,
+  .n-drawer-content,
+  .n-modal-scroll-content {
+    scrollbar-color: rgba(255, 255, 255, 0.42) transparent;
+  }
+
+  *::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.42);
+  }
+
+  .n-layout-scroll-container::-webkit-scrollbar-thumb,
+  .n-drawer-content::-webkit-scrollbar-thumb,
+  .n-modal-scroll-content::-webkit-scrollbar-thumb {
+    background-color: rgba(255, 255, 255, 0.42);
+  }
+
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  .n-layout-scroll-container::-webkit-scrollbar-thumb:hover,
+  .n-drawer-content::-webkit-scrollbar-thumb:hover,
+  .n-modal-scroll-content::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(255, 255, 255, 0.62);
+    box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12);
+  }
+
+  *::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 255, 255, 0.74);
+  }
+
+  .n-layout-scroll-container::-webkit-scrollbar-thumb:active,
+  .n-drawer-content::-webkit-scrollbar-thumb:active,
+  .n-modal-scroll-content::-webkit-scrollbar-thumb:active {
+    background-color: rgba(255, 255, 255, 0.74);
+  }
+}
+

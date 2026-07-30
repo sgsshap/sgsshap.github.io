@@ -1,0 +1,764 @@
+/* 水墨丹青：全景皴染 + 卷轴钤印 + 纸本控件（挂 .theme-shuimo / body.theme-shuimo） */
+
+/* 与手动晴光/夜色同步：避免仅靠 prefers-color-scheme 造成滚动条、底色割裂 */
+html:has(body.theme-shuimo:not(.dark)) {
+  background-color: rgb(246, 243, 238);
+  color-scheme: light;
+  /* 丹青水印与右下角墨渍共用色相；--shuimo-blot-opacity 单独控制墨渍浓淡 */
+  --shuimo-ink-r: 42;
+  --shuimo-ink-g: 38;
+  --shuimo-ink-b: 34;
+  --shuimo-mark-opacity: 0.048;
+  --shuimo-blot-opacity: 0.085;
+}
+
+html:has(body.dark.theme-shuimo) {
+  background-color: rgb(22, 21, 26);
+  color-scheme: dark;
+  --shuimo-ink-r: 232;
+  --shuimo-ink-g: 228;
+  --shuimo-ink-b: 218;
+  --shuimo-mark-opacity: 0.062;
+  --shuimo-blot-opacity: 0.068;
+}
+
+/*
+ * 全景皴染挂在 html::before，避免被 body 底色压在下面，也不受 #app 内大块实底影响。
+ * #app 叠在 z-index:3，水印 body::after 在 z-index:2，全景 html::before 在 z-index:0。
+ */
+/*
+ * 墨渍：../bg/shuimo-point.png（主题静态资源，构建输出 themes/bg/ 无 hash）
+ */
+html:has(body.theme-shuimo:not(.dark))::before,
+html:has(body.dark.theme-shuimo)::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-color: rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), var(--shuimo-blot-opacity));
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: right min(4vw, 28px) bottom min(5vh, 36px);
+  background-size: min(48vmin, 420px) auto;
+  -webkit-mask-image: url("../bg/shuimo-point.png");
+  -webkit-mask-repeat: no-repeat;
+  -webkit-mask-position: right min(4vw, 28px) bottom min(5vh, 36px);
+  -webkit-mask-size: min(48vmin, 420px) auto;
+  mask-image: url("../bg/shuimo-point.png");
+  mask-repeat: no-repeat;
+  mask-position: right min(4vw, 28px) bottom min(5vh, 36px);
+  mask-size: min(48vmin, 420px) auto;
+  mask-mode: alpha;
+}
+
+/* body 不透底，否则负 z 伪元素会被压在底色下面看不见 */
+body.theme-shuimo {
+  position: relative;
+  z-index: 0;
+  background-color: transparent;
+}
+
+body.theme-shuimo:not(.dark) {
+  color-scheme: light;
+}
+
+body.dark.theme-shuimo {
+  color-scheme: dark;
+}
+
+body.theme-shuimo > #app {
+  position: relative;
+  z-index: 3;
+}
+
+.theme-shuimo.n-config-provider {
+  font-family: var(--site-font-family);
+  position: relative;
+  isolation: isolate;
+  /* 勿盖住 body 上固定全景层（墨点 / 皴染） */
+  background: transparent !important;
+}
+
+/* 全景仅在 html::before（见文件顶部），此处不再重复 body::before，避免盖住 html 层 */
+
+/* 水印「丹青」：桌面横排；窄屏（≤1279px）隐藏，仅保留 html::before 墨点 */
+body.theme-shuimo::after {
+  content: "丹青";
+  display: block;
+  position: fixed;
+  left: 50%;
+  top: 36%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  pointer-events: none;
+  font-family: "金梅毛草行", "Songti SC", "SimSun", serif;
+  font-size: min(22vw, 320px);
+  font-weight: 600;
+  letter-spacing: 0.32em;
+  writing-mode: horizontal-tb;
+  text-orientation: mixed;
+  text-align: center;
+  white-space: nowrap;
+  color: rgb(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b));
+  opacity: var(--shuimo-mark-opacity);
+  line-height: 1;
+}
+
+@media (max-width: 1279px) {
+  body.theme-shuimo::after {
+    content: none;
+    display: none;
+  }
+}
+
+.theme-shuimo .n-layout-scroll-container {
+  background-color: transparent !important;
+}
+
+/* 原先 linear-gradient 高光近半透明白，整块盖住 html 皴染，看起来像「没有水墨」 */
+.theme-shuimo .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.dark.theme-shuimo .n-layout-scroll-container {
+  background-color: transparent !important;
+}
+
+.dark.theme-shuimo .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+/* ---------- 册页卡：宣纸本心 + 对角拐子 + 钤印 + 纸筋 ---------- */
+.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-shuimo .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.09) !important;
+  background-color: var(--card-color) !important;
+  background-image: radial-gradient(
+    ellipse 120% 75% at 50% -15%,
+    rgba(255, 255, 255, 0.38) 0%,
+    transparent 55%
+  );
+  box-shadow: 0 14px 36px -14px rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.13);
+  --shuimo-inset: 10px;
+  --shuimo-mark: 13px;
+  --shuimo-ink-line: rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.24);
+  --shuimo-seal: rgba(162, 56, 50, 0.38);
+  --shuimo-seal-ring: rgba(162, 56, 50, 0.12);
+}
+
+.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-shuimo .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 左上 + 右下拐子，右上钤印（无内框，避免叠线） */
+.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::before,
+.theme-shuimo .home-view__panel::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  --f: var(--shuimo-inset);
+  --m: var(--shuimo-mark);
+  --c: var(--shuimo-ink-line);
+  background:
+    linear-gradient(var(--c), var(--c)) left var(--f) top var(--f) / var(--m) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) left var(--f) top var(--f) / 1px var(--m) no-repeat,
+    linear-gradient(var(--c), var(--c)) right var(--f) bottom var(--f) / var(--m) 1px no-repeat,
+    linear-gradient(var(--c), var(--c)) right var(--f) bottom var(--f) / 1px var(--m) no-repeat,
+    radial-gradient(circle at calc(100% - 22px) 22px, var(--shuimo-seal) 0 6px, transparent 6.5px),
+    radial-gradient(circle at calc(100% - 22px) 22px, transparent 0 7.5px, var(--shuimo-seal-ring) 8px 8.5px, transparent 9px);
+}
+
+.dark.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-shuimo .home-view__panel {
+  border-color: rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.11) !important;
+  background-color: var(--card-color) !important;
+  background-image: radial-gradient(
+    ellipse 115% 70% at 50% -10%,
+    rgba(238, 234, 226, 0.06) 0%,
+    transparent 52%
+  );
+  box-shadow: 0 18px 44px -12px rgba(0, 0, 0, 0.48);
+  --shuimo-ink-line: rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.2);
+  --shuimo-seal: rgba(218, 108, 96, 0.46);
+  --shuimo-seal-ring: rgba(218, 108, 96, 0.15);
+}
+
+/* 纸筋 + 散墨 + 左下淡晕 */
+.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::after,
+.theme-shuimo .home-view__panel::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: 0.48;
+  background:
+    repeating-linear-gradient(
+      -16deg,
+      transparent,
+      transparent 6px,
+      rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.016) 6px,
+      rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.016) 7px
+    ),
+    radial-gradient(ellipse 55% 45% at -5% 105%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.05) 0%, transparent 72%),
+    radial-gradient(circle at 18% 28%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.07) 0, transparent 2.6px),
+    radial-gradient(circle at 72% 76%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.055) 0, transparent 2.8px);
+}
+
+.dark.theme-shuimo .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::after,
+.dark.theme-shuimo .home-view__panel::after {
+  opacity: 0.55;
+  background:
+    repeating-linear-gradient(
+      -16deg,
+      transparent,
+      transparent 6px,
+      rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.026) 6px,
+      rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.026) 7px
+    ),
+    radial-gradient(ellipse 55% 45% at -5% 105%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.07) 0%, transparent 70%),
+    radial-gradient(circle at 20% 32%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.1) 0, transparent 2.5px),
+    radial-gradient(circle at 74% 72%, rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.08) 0, transparent 2.7px);
+}
+
+/* 卡头：朱砂题签 + 枯笔 */
+.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header {
+  position: relative;
+  padding-bottom: 8px !important;
+}
+
+.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header + .n-card__content {
+  padding-top: 18px !important;
+}
+
+.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header__main {
+  font-family: "Songti SC", "SimSun", serif;
+  letter-spacing: 0.06em;
+  font-weight: 600;
+}
+
+.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header__main::before {
+  content: "";
+  display: inline-block;
+  width: 3px;
+  height: 0.92em;
+  margin-right: 10px;
+  border-radius: 1px;
+  vertical-align: -0.12em;
+  background: linear-gradient(
+    180deg,
+    rgba(162, 56, 50, 0.55),
+    rgba(162, 56, 50, 0.28)
+  );
+  opacity: 0.85;
+}
+
+.dark.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header__main::before {
+  background: linear-gradient(
+    180deg,
+    rgba(218, 108, 96, 0.62),
+    rgba(218, 108, 96, 0.32)
+  );
+}
+
+.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::after {
+  content: "";
+  position: absolute;
+  left: 22px;
+  right: 22px;
+  bottom: 0;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.08) 6%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.22) 38%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.18) 62%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.06) 94%,
+    transparent 100%
+  );
+  filter: blur(0.35px);
+  opacity: 0.9;
+}
+
+.dark.theme-shuimo .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::after {
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.06) 8%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.16) 42%,
+    rgba(var(--shuimo-ink-r), var(--shuimo-ink-g), var(--shuimo-ink-b), 0.12) 68%,
+    transparent 100%
+  );
+}
+
+/* 按钮：无悬浮抬起；实心按钮统一墨晕径向渐变（底色仍为 --n-color） */
+.theme-shuimo .n-button {
+  transition: color 0.26s ease,
+  background-color 0.26s ease,
+  border-color 0.26s ease,
+  box-shadow 0.26s ease,
+  opacity 0.26s ease;
+}
+
+.theme-shuimo .n-button:not(.n-button--disabled):hover,
+.theme-shuimo .n-button:not(.n-button--disabled):focus,
+.theme-shuimo .n-button:not(.n-button--disabled):active,
+.theme-shuimo .n-button:not(.n-button--disabled).n-button--pressed {
+  transform: none !important;
+}
+
+.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled) {
+  position: relative;
+  overflow: hidden;
+  border: none !important;
+  background-image: radial-gradient(ellipse 118% 104% at 50% 30%, rgba(255, 255, 255, 0.26) 0%, rgba(255, 255, 255, 0) 46%),
+  radial-gradient(ellipse 94% 94% at 50% 62%, transparent 50%, rgba(0, 0, 0, 0.13) 100%);
+  box-shadow: 0 1px 0 rgba(42, 38, 34, 0.14),
+  0 8px 18px -12px rgba(42, 38, 34, 0.28),
+  inset 0 1px 0 rgba(255, 255, 255, 0.24),
+  inset 0 -12px 26px rgba(0, 0, 0, 0.07);
+}
+
+.theme-shuimo .n-button--tiny-type {
+  padding: 0 8px;
+}
+
+.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled):hover,
+.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled):focus {
+  box-shadow: 0 1px 0 rgba(42, 38, 34, 0.14),
+  0 8px 18px -12px rgba(42, 38, 34, 0.28),
+  inset 0 1px 0 rgba(255, 255, 255, 0.24),
+  inset 0 -12px 26px rgba(0, 0, 0, 0.07);
+}
+
+.dark.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled) {
+  background-image: radial-gradient(ellipse 118% 104% at 50% 28%, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 44%),
+  radial-gradient(ellipse 94% 94% at 50% 62%, transparent 48%, rgba(0, 0, 0, 0.38) 100%);
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45),
+  0 10px 22px -10px rgba(0, 0, 0, 0.65),
+  inset 0 1px 0 rgba(255, 255, 255, 0.08),
+  inset 0 -14px 28px rgba(0, 0, 0, 0.42);
+}
+
+.dark.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled):hover,
+.dark.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled):focus {
+  box-shadow: 0 1px 0 rgba(0, 0, 0, 0.45),
+  0 10px 22px -10px rgba(0, 0, 0, 0.65),
+  inset 0 1px 0 rgba(255, 255, 255, 0.08),
+  inset 0 -14px 28px rgba(0, 0, 0, 0.42);
+}
+
+/* 输入 / 下拉：纸本凹陷 + 枯笔线框 */
+.theme-shuimo .n-input .n-input__border,
+.theme-shuimo .n-base-selection .n-base-selection__border {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: rgba(42, 38, 34, 0.13) !important;
+  box-shadow: inset 0 2px 8px rgba(42, 38, 34, 0.045);
+}
+
+.dark.theme-shuimo .n-input .n-input__border,
+.dark.theme-shuimo .n-base-selection .n-base-selection__border {
+  border-color: rgba(238, 234, 226, 0.18) !important;
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.42),
+  inset 0 0 0 1px rgba(238, 234, 226, 0.04);
+}
+
+.theme-shuimo .n-input:not(.n-input--disabled):hover .n-input__border,
+.theme-shuimo .n-base-selection:not(.n-base-selection--disabled):hover .n-base-selection__border {
+  border-color: rgba(42, 38, 34, 0.22) !important;
+}
+
+.dark.theme-shuimo .n-input:not(.n-input--disabled):hover .n-input__border,
+.dark.theme-shuimo .n-base-selection:not(.n-base-selection--disabled):hover .n-base-selection__border {
+  border-color: rgba(238, 234, 226, 0.26) !important;
+}
+
+.theme-shuimo .n-input.n-input--focus .n-input__state-border,
+.theme-shuimo .n-base-selection.n-base-selection--focus .n-base-selection__state-border {
+  box-shadow: 0 0 0 1px rgba(42, 38, 34, 0.26),
+  0 8px 22px rgba(42, 38, 34, 0.07) !important;
+}
+
+.dark.theme-shuimo .n-input.n-input--focus .n-input__state-border,
+.dark.theme-shuimo .n-base-selection.n-base-selection--focus .n-base-selection__state-border {
+  box-shadow: 0 0 0 1px rgba(238, 234, 226, 0.34),
+  0 10px 28px rgba(0, 0, 0, 0.48),
+  0 0 22px rgba(238, 234, 226, 0.06) !important;
+}
+
+/* 下拉面板：册页 + 细纹纸 */
+.theme-shuimo .n-base-select-menu {
+  border-radius: 12px !important;
+  overflow: hidden;
+  box-shadow: 0 16px 40px rgba(42, 38, 34, 0.13),
+  0 2px 0 rgba(42, 38, 34, 0.05),
+  inset 0 1px 0 rgba(255, 255, 255, 0.55);
+  position: relative;
+}
+
+.theme-shuimo .n-base-select-menu::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.45;
+  background: repeating-linear-gradient(-14deg, transparent, transparent 5px, rgba(42, 38, 34, 0.014) 5px, rgba(42, 38, 34, 0.014) 6px),
+  radial-gradient(circle at 12% 22%, rgba(42, 38, 34, 0.09) 0, rgba(42, 38, 34, 0.09) 1px, transparent 2.6px),
+  radial-gradient(circle at 58% 78%, rgba(42, 38, 34, 0.065) 0, transparent 2.8px),
+  radial-gradient(circle at 88% 38%, rgba(38, 34, 30, 0.075) 0, transparent 2.5px),
+  radial-gradient(circle at 34% 62%, rgba(42, 38, 34, 0.055) 0, transparent 3.2px);
+}
+
+.dark.theme-shuimo .n-base-select-menu {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.58),
+  0 2px 0 rgba(0, 0, 0, 0.35),
+  inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+.dark.theme-shuimo .n-base-select-menu::after {
+  opacity: 0.55;
+  background: repeating-linear-gradient(-14deg, transparent, transparent 5px, rgba(238, 234, 226, 0.028) 5px, rgba(238, 234, 226, 0.028) 6px),
+  radial-gradient(circle at 14% 26%, rgba(238, 234, 226, 0.12) 0, rgba(238, 234, 226, 0.12) 1px, transparent 2.6px),
+  radial-gradient(circle at 62% 74%, rgba(228, 224, 216, 0.09) 0, transparent 2.9px),
+  radial-gradient(circle at 90% 42%, rgba(236, 232, 224, 0.1) 0, transparent 2.5px),
+  radial-gradient(circle at 40% 58%, rgba(232, 228, 220, 0.075) 0, transparent 3.4px);
+}
+
+/* 分割线：中锋一线 */
+.theme-shuimo .n-divider:not(.n-divider--vertical) .n-divider__line {
+  height: 2px !important;
+  border-radius: 2px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(42, 38, 34, 0.22) 18%,
+    rgba(42, 38, 34, 0.38) 50%,
+    rgba(42, 38, 34, 0.18) 82%,
+    transparent
+  ) !important;
+  border: none !important;
+}
+
+.dark.theme-shuimo .n-divider:not(.n-divider--vertical) .n-divider__line {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(232, 228, 218, 0.16) 18%,
+    rgba(232, 228, 218, 0.32) 50%,
+    rgba(232, 228, 218, 0.14) 82%,
+    transparent
+  ) !important;
+}
+
+/* Tag：钤印 + 碎墨点 */
+.theme-shuimo .n-tag {
+  position: relative;
+  overflow: hidden;
+  border-style: solid;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.35);
+}
+
+.theme-shuimo .n-tag::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.38;
+  border-radius: inherit;
+  background: radial-gradient(circle at 18% 72%, rgba(42, 38, 34, 0.14) 0, rgba(42, 38, 34, 0.14) 1px, transparent 2.4px),
+  radial-gradient(circle at 76% 28%, rgba(42, 38, 34, 0.1) 0, transparent 2.6px),
+  radial-gradient(circle at 52% 52%, rgba(38, 34, 30, 0.09) 0, transparent 2.8px),
+  radial-gradient(circle at 88% 82%, rgba(46, 42, 38, 0.11) 0, rgba(46, 42, 38, 0.11) 0.9px, transparent 2.5px);
+}
+
+.dark.theme-shuimo .n-tag {
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+
+.dark.theme-shuimo .n-tag::before {
+  opacity: 0.48;
+  background: radial-gradient(circle at 22% 68%, rgba(238, 234, 226, 0.16) 0, rgba(238, 234, 226, 0.16) 1px, transparent 2.5px),
+  radial-gradient(circle at 74% 32%, rgba(228, 224, 216, 0.12) 0, transparent 2.7px),
+  radial-gradient(circle at 48% 48%, rgba(236, 232, 224, 0.11) 0, transparent 3px),
+  radial-gradient(circle at 90% 78%, rgba(240, 236, 228, 0.14) 0, rgba(240, 236, 228, 0.14) 0.9px, transparent 2.6px);
+}
+
+/* Switch：浅色加强凹槽边界 / OFF–ON 对比；深色样式仍在下方 */
+.light.theme-shuimo .n-switch:not(.n-switch--disabled) {
+  --n-text-color: rgba(42, 38, 34, 0.88);
+}
+
+/* Switch：纸本凹槽关态 / 焦墨浓铺开态；滑块月白珠（不设固定绿色） */
+.theme-shuimo .n-switch .n-switch__rail {
+  position: relative;
+  overflow: hidden;
+}
+
+.light.theme-shuimo .n-switch .n-switch__rail {
+  border: 1px solid rgba(42, 38, 34, 0.26) !important;
+  box-shadow: inset 0 4px 14px rgba(42, 38, 34, 0.13),
+  inset 0 -2px 0 rgba(255, 255, 255, 0.72),
+  0 0 0 1px rgba(255, 255, 255, 0.55),
+  0 2px 8px rgba(42, 38, 34, 0.09);
+  /* 底层实色赭灰轨面 + 高光纤维，避免与纸本底色糊成一片 */
+  background-image: radial-gradient(ellipse 142% 192% at 22% 38%, rgba(255, 255, 255, 0.55) 0%, transparent 55%),
+  radial-gradient(ellipse 118% 168% at 88% 68%, rgba(42, 38, 34, 0.085) 0%, transparent 52%),
+  repeating-linear-gradient(
+    91deg,
+    transparent,
+    transparent 7px,
+    rgba(42, 38, 34, 0.026) 7px,
+    rgba(42, 38, 34, 0.026) 8px
+  ),
+  linear-gradient(178deg, rgb(228, 222, 210) 0%, rgb(210, 202, 190) 100%) !important;
+}
+
+.dark.theme-shuimo .n-switch .n-switch__rail {
+  border: 1px solid rgba(238, 234, 226, 0.12) !important;
+  box-shadow: inset 0 3px 18px rgba(0, 0, 0, 0.52),
+  inset 0 -1px 0 rgba(255, 255, 255, 0.05),
+  0 1px 4px rgba(0, 0, 0, 0.38);
+  background-image: radial-gradient(ellipse 145% 195% at 16% 36%, rgba(255, 255, 255, 0.1) 0%, transparent 58%),
+  radial-gradient(ellipse 125% 175% at 92% 68%, rgba(0, 0, 0, 0.42) 0%, transparent 54%),
+  repeating-linear-gradient(
+    91deg,
+    transparent,
+    transparent 7px,
+    rgba(238, 234, 226, 0.035) 7px,
+    rgba(238, 234, 226, 0.035) 8px
+  ) !important;
+}
+
+/* 开态：浓淡墨色铺轨（非语义绿），与关态纸本浅赭拉开对比 */
+.light.theme-shuimo .n-switch.n-switch--active .n-switch__rail {
+  border-color: rgba(42, 36, 30, 0.48) !important;
+  box-shadow: inset 0 4px 18px rgba(22, 18, 14, 0.42),
+  inset 0 -1px 0 rgba(255, 255, 255, 0.38),
+  0 0 0 1px rgba(255, 255, 255, 0.38),
+  0 2px 14px rgba(36, 30, 26, 0.28);
+  background-image: radial-gradient(ellipse 118% 165% at 72% 28%, rgba(255, 255, 255, 0.36) 0%, transparent 52%),
+  radial-gradient(ellipse 102% 142% at 36% 74%, rgba(32, 26, 22, 0.42) 0%, transparent 58%),
+  linear-gradient(
+    158deg,
+    rgb(118, 108, 98) 0%,
+    rgb(82, 74, 68) 44%,
+    rgb(56, 48, 42) 100%
+  ) !important;
+}
+
+.light.theme-shuimo .n-switch .n-switch__rail::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  opacity: 0.22;
+  border-radius: inherit;
+  background: radial-gradient(circle at 28% 44%, rgba(42, 38, 34, 0.06) 0%, transparent 48%),
+  radial-gradient(circle at 76% 54%, rgba(42, 38, 34, 0.035) 0%, transparent 50%);
+}
+
+.light.theme-shuimo .n-switch.n-switch--active .n-switch__rail::after {
+  opacity: 0.22;
+  background: radial-gradient(circle at 72% 30%, rgba(255, 255, 255, 0.38) 0%, transparent 44%),
+  radial-gradient(circle at 26% 74%, rgba(24, 18, 14, 0.22) 0%, transparent 48%);
+}
+
+.theme-shuimo .n-switch .n-switch__rail::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+}
+
+.dark.theme-shuimo .n-switch .n-switch__rail::after {
+  opacity: 0.38;
+  background: radial-gradient(circle at 26% 42%, rgba(238, 234, 226, 0.07) 0%, transparent 46%),
+  radial-gradient(circle at 76% 58%, rgba(0, 0, 0, 0.35) 0%, transparent 48%);
+}
+
+.dark.theme-shuimo .n-switch.n-switch--active .n-switch__rail {
+  border-color: color-mix(in srgb, var(--primary-color) 34%, rgba(210, 202, 188, 0.28)) !important;
+  box-shadow: inset 0 2px 14px rgba(0, 0, 0, 0.55),
+  inset 0 -1px 0 rgba(255, 255, 255, 0.06);
+  background-image: linear-gradient(
+    162deg,
+    color-mix(in srgb, var(--primary-color) 54%, rgb(42, 38, 34)) 0%,
+    color-mix(in srgb, var(--primary-color) 38%, rgb(26, 22, 20)) 100%
+  ) !important;
+}
+
+.dark.theme-shuimo .n-switch.n-switch--active .n-switch__rail::after {
+  opacity: 0.22;
+  background: radial-gradient(circle at 72% 32%, rgba(255, 252, 244, 0.05) 0%, transparent 44%),
+  radial-gradient(circle at 28% 74%, rgba(8, 6, 6, 0.45) 0%, transparent 48%);
+}
+
+.theme-shuimo .n-switch .n-switch__button {
+  background-color: transparent !important;
+  background-image: radial-gradient(
+    circle at 36% 30%,
+    rgba(255, 255, 255, 0.98) 0%,
+    rgba(252, 249, 244, 1) 38%,
+    rgba(232, 228, 218, 1) 72%,
+    rgba(210, 204, 192, 1) 100%
+  ) !important;
+  border: 1px solid rgba(42, 38, 34, 0.16) !important;
+  box-shadow: 0 2px 7px rgba(42, 38, 34, 0.2),
+  inset 0 2px 7px rgba(255, 255, 255, 0.82),
+  inset 0 -4px 9px rgba(42, 38, 34, 0.07) !important;
+}
+
+.light.theme-shuimo .n-switch .n-switch__button {
+  border: 1px solid rgba(42, 38, 34, 0.3) !important;
+  box-shadow: 0 3px 11px rgba(42, 38, 34, 0.32),
+  0 0 0 1px rgba(255, 255, 255, 0.75),
+  inset 0 2px 9px rgba(255, 255, 255, 0.95),
+  inset 0 -5px 11px rgba(42, 38, 34, 0.09) !important;
+}
+
+.light.theme-shuimo .n-switch.n-switch--active .n-switch__button {
+  border-color: rgba(36, 30, 26, 0.52) !important;
+}
+
+.theme-shuimo .n-switch.n-switch--active .n-switch__button {
+  border-color: rgba(44, 38, 34, 0.38) !important;
+}
+
+.dark.theme-shuimo .n-switch .n-switch__button {
+  background-image: radial-gradient(
+    circle at 34% 28%,
+    rgba(250, 248, 244, 0.96) 0%,
+    rgba(228, 224, 214, 1) 52%,
+    rgba(188, 182, 172, 1) 100%
+  ) !important;
+  border-color: rgba(238, 234, 226, 0.2) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.58),
+  inset 0 2px 6px rgba(255, 255, 255, 0.26),
+  inset 0 -5px 11px rgba(0, 0, 0, 0.38) !important;
+}
+
+.dark.theme-shuimo .n-switch.n-switch--active .n-switch__button {
+  border-color: rgba(218, 208, 192, 0.42) !important;
+}
+
+/* 输入框 / 下拉触发区：纸面碎墨（置于底层，不挡文字） */
+.theme-shuimo .n-input,
+.theme-shuimo .n-base-selection {
+  position: relative;
+}
+
+.theme-shuimo .n-input::before,
+.theme-shuimo .n-base-selection::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 3px;
+  border-radius: inherit;
+  z-index: 0;
+  opacity: 0.4;
+  background: radial-gradient(circle at 16% 62%, rgba(42, 38, 34, 0.085) 0, rgba(42, 38, 34, 0.085) 1px, transparent 2.5px),
+  radial-gradient(circle at 72% 38%, rgba(42, 38, 34, 0.065) 0, transparent 2.4px),
+  radial-gradient(circle at 44% 82%, rgba(38, 34, 30, 0.055) 0, transparent 3px),
+  radial-gradient(circle at 91% 71%, rgba(46, 42, 38, 0.07) 0, rgba(46, 42, 38, 0.07) 0.85px, transparent 2.3px);
+}
+
+.dark.theme-shuimo .n-input::before,
+.dark.theme-shuimo .n-base-selection::before {
+  opacity: 0.52;
+  background: radial-gradient(circle at 18% 58%, rgba(238, 234, 226, 0.11) 0, rgba(238, 234, 226, 0.11) 1px, transparent 2.5px),
+  radial-gradient(circle at 70% 42%, rgba(228, 224, 216, 0.08) 0, transparent 2.5px),
+  radial-gradient(circle at 42% 78%, rgba(236, 232, 224, 0.075) 0, transparent 3px),
+  radial-gradient(circle at 88% 68%, rgba(240, 236, 228, 0.095) 0, rgba(240, 236, 228, 0.095) 0.85px, transparent 2.4px);
+}
+
+.theme-shuimo .n-input__input-el,
+.theme-shuimo .n-input__textarea-el,
+.theme-shuimo .n-base-selection-label,
+.theme-shuimo .n-base-selection-input,
+.theme-shuimo .n-base-selection-tags {
+  position: relative;
+  z-index: 1;
+}
+
+.theme-shuimo .n-button:not(.n-button--text):not(.n-button--ghost):not(.n-button--disabled) .n-button__content {
+  position: relative;
+  z-index: 1;
+}
+
+/* 滚动条：墨条（!important 压过 index.css 里 prefers-color-scheme，与手动浅色/深色一致） */
+body.theme-shuimo:not(.dark) *,
+body.theme-shuimo:not(.dark) .n-layout-scroll-container,
+body.theme-shuimo:not(.dark) .n-drawer-content,
+body.theme-shuimo:not(.dark) .n-modal-scroll-content {
+  scrollbar-color: rgba(42, 38, 34, 0.42) transparent !important;
+}
+
+body.theme-shuimo:not(.dark) *::-webkit-scrollbar-thumb,
+body.theme-shuimo:not(.dark) .n-layout-scroll-container::-webkit-scrollbar-thumb,
+body.theme-shuimo:not(.dark) .n-drawer-content::-webkit-scrollbar-thumb,
+body.theme-shuimo:not(.dark) .n-modal-scroll-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(42, 38, 34, 0.42), rgba(42, 38, 34, 0.22)) !important;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+body.theme-shuimo:not(.dark) *::-webkit-scrollbar-thumb:hover,
+body.theme-shuimo:not(.dark) .n-layout-scroll-container::-webkit-scrollbar-thumb:hover,
+body.theme-shuimo:not(.dark) .n-drawer-content::-webkit-scrollbar-thumb:hover,
+body.theme-shuimo:not(.dark) .n-modal-scroll-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(42, 38, 34, 0.52), rgba(42, 38, 34, 0.28)) !important;
+}
+
+body.dark.theme-shuimo *,
+body.dark.theme-shuimo .n-layout-scroll-container,
+body.dark.theme-shuimo .n-drawer-content,
+body.dark.theme-shuimo .n-modal-scroll-content {
+  scrollbar-color: rgba(232, 228, 218, 0.38) transparent !important;
+}
+
+body.dark.theme-shuimo *::-webkit-scrollbar-thumb,
+body.dark.theme-shuimo .n-layout-scroll-container::-webkit-scrollbar-thumb,
+body.dark.theme-shuimo .n-drawer-content::-webkit-scrollbar-thumb,
+body.dark.theme-shuimo .n-modal-scroll-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, rgba(232, 228, 218, 0.38), rgba(232, 228, 218, 0.18)) !important;
+  border-radius: 6px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+body.dark.theme-shuimo *::-webkit-scrollbar-thumb:hover,
+body.dark.theme-shuimo .n-layout-scroll-container::-webkit-scrollbar-thumb:hover,
+body.dark.theme-shuimo .n-drawer-content::-webkit-scrollbar-thumb:hover,
+body.dark.theme-shuimo .n-modal-scroll-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(180deg, rgba(232, 228, 218, 0.52), rgba(232, 228, 218, 0.26)) !important;
+}
+
+/* 设置页引言 */
+.theme-shuimo .settings-view__quote {
+  border-radius: 14px;
+  letter-spacing: 0.12em;
+}
+
+.theme-shuimo .settings-view__quote::before,
+.theme-shuimo .settings-view__quote::after {
+  opacity: 0.24;
+}

@@ -1,0 +1,113 @@
+/*
+ * 百科页 sticky 顶栏 / 搜索栏
+ * 水墨 / 山海：使用与 html 背景一致的实色，避免默认 --body-color / --card-color 色偏。
+ */
+
+/* ========== 水墨 ========== */
+body.theme-shuimo .wiki-view__chrome {
+  background: rgb(246, 243, 238) !important;
+  border-bottom-color: color-mix(
+    in srgb,
+    rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)) 16%,
+    transparent
+  ) !important;
+}
+
+body.dark.theme-shuimo .wiki-view__chrome {
+  background: rgb(22, 21, 26) !important;
+}
+
+body.theme-shuimo .wiki-view__tabs .n-tabs-rail {
+  background: color-mix(in srgb, rgb(246, 243, 238) 90%, rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34))) !important;
+  border-color: color-mix(
+    in srgb,
+    rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)) 14%,
+    transparent
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, rgb(246, 243, 238) 35%, rgb(255, 255, 255)),
+    0 1px 3px color-mix(in srgb, rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)) 6%, transparent) !important;
+}
+
+body.dark.theme-shuimo .wiki-view__tabs .n-tabs-rail {
+  background: color-mix(in srgb, rgb(22, 21, 26) 92%, rgb(var(--shuimo-ink-r, 232), var(--shuimo-ink-g, 228), var(--shuimo-ink-b, 218))) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in srgb, rgb(232, 228, 218) 6%, transparent),
+    0 1px 3px color-mix(in srgb, rgb(0, 0, 0) 18%, transparent) !important;
+}
+
+body.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar--fixed {
+  background: rgb(246, 243, 238) !important;
+  box-shadow: 0 1px 0
+    color-mix(
+      in srgb,
+      rgb(var(--shuimo-ink-r, 42), var(--shuimo-ink-g, 38), var(--shuimo-ink-b, 34)) 12%,
+      transparent
+    ) !important;
+}
+
+body.dark.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar--fixed {
+  background: rgb(22, 21, 26) !important;
+}
+
+/* 搜索栏输入 / 筛选：略亮于栏底，避免与背景糊成一片 */
+body.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar .n-input,
+body.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar .n-base-selection {
+  --n-color: rgb(255, 253, 248) !important;
+  --n-color-focus: rgb(255, 253, 248) !important;
+}
+
+body.dark.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar .n-input,
+body.dark.theme-shuimo .wiki-search-panel--page .wiki-search-panel__toolbar .n-base-selection {
+  --n-color: rgb(36, 35, 42) !important;
+  --n-color-focus: rgb(36, 35, 42) !important;
+}
+
+/* ========== 山海 ========== */
+body.theme-shanhai .wiki-view__chrome {
+  background: rgb(248, 246, 242) !important;
+  border-bottom-color: color-mix(in srgb, var(--primary-color) 18%, transparent) !important;
+}
+
+body.dark.theme-shanhai .wiki-view__chrome {
+  background: rgb(12, 11, 16) !important;
+  border-bottom-color: color-mix(in srgb, var(--info-color) 16%, transparent) !important;
+}
+
+body.theme-shanhai .wiki-view__tabs .n-tabs-rail {
+  background: color-mix(in srgb, rgb(248, 246, 242) 88%, var(--primary-color)) !important;
+  border-color: color-mix(in srgb, var(--primary-color) 16%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.28),
+    0 1px 3px color-mix(in srgb, var(--primary-color) 8%, transparent) !important;
+}
+
+body.dark.theme-shanhai .wiki-view__tabs .n-tabs-rail {
+  background: color-mix(in srgb, rgb(18, 20, 28) 90%, var(--info-color)) !important;
+  border-color: color-mix(in srgb, var(--info-color) 14%, transparent) !important;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.06),
+    0 1px 3px color-mix(in srgb, rgb(0, 0, 0) 22%, transparent) !important;
+}
+
+body.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar--fixed {
+  background: rgb(248, 246, 242) !important;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--primary-color) 14%, transparent) !important;
+}
+
+body.dark.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar--fixed {
+  background: rgb(18, 20, 28) !important;
+  box-shadow: 0 1px 0 color-mix(in srgb, var(--info-color) 12%, transparent) !important;
+}
+
+body.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar .n-input,
+body.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar .n-base-selection {
+  --n-color: rgb(255, 254, 251) !important;
+  --n-color-focus: rgb(255, 254, 251) !important;
+}
+
+body.dark.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar .n-base-selection,
+body.dark.theme-shanhai .wiki-search-panel--page .wiki-search-panel__toolbar .n-input {
+  --n-color: rgb(30, 32, 42) !important;
+  --n-color-focus: rgb(30, 32, 42) !important;
+}

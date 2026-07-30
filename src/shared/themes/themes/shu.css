@@ -1,0 +1,76 @@
+/* 蜀：汉祚永昌 — 近白/墨灰卡片 + 极淡蜀红氛围（theme-shu） */
+
+html:has(body.theme-shu:not(.dark)) {
+  --shu-accent-r: 122;
+  --shu-accent-g: 37;
+  --shu-accent-b: 40;
+}
+
+html:has(body.dark.theme-shu) {
+  --shu-accent-r: 176;
+  --shu-accent-g: 52;
+  --shu-accent-b: 48;
+}
+
+.theme-shu .n-layout-scroll-container,
+.theme-shu .n-layout,
+.dark.theme-shu .n-layout-scroll-container,
+.dark.theme-shu .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.theme-shu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-shu .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.1) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 85% 48% at 50% -6%,
+      rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.07) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      transparent 42%,
+      rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.02) 100%
+    );
+  box-shadow:
+    0 10px 28px -14px rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.1),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.theme-shu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-shu .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-shu .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-shu .home-view__panel {
+  border-color: rgba(232, 218, 212, 0.1) !important;
+  background-image:
+    radial-gradient(
+      ellipse 75% 42% at 50% 0%,
+      rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.1) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 45% 70% at 100% 80%,
+      rgba(var(--shu-accent-r), var(--shu-accent-g), var(--shu-accent-b), 0.05) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 48%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+  box-shadow:
+    0 14px 36px -18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}

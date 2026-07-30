@@ -1,0 +1,78 @@
+/* 单/双势力选项按钮共用样式（LegendConfig、OrderedKingdomPicker） */
+.kingdom-option-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  width: 100%;
+}
+
+.kingdom-option-buttons .n-button.kingdom-option {
+  min-width: 42px;
+  padding-inline: 11px;
+  transition:
+    background-color 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.kingdom-option-buttons .n-button.kingdom-option--wei {
+  --kcp: #4a87eb;
+}
+.kingdom-option-buttons .n-button.kingdom-option--shu {
+  --kcp: #c25a3c;
+}
+.kingdom-option-buttons .n-button.kingdom-option--wu {
+  --kcp: #82d048;
+}
+.kingdom-option-buttons .n-button.kingdom-option--qun {
+  --kcp: #666;
+}
+.kingdom-option-buttons .n-button.kingdom-option--jin {
+  --kcp: #c300ff;
+}
+.kingdom-option-buttons .n-button.kingdom-option--shen {
+  --kcp: #c9a800;
+}
+
+.kingdom-option-buttons
+  .n-button.kingdom-option:not(.kingdom-option--selected):not(.n-button--disabled) {
+  color: var(--kcp) !important;
+  border-color: color-mix(in srgb, var(--kcp) 32%, var(--border-color)) !important;
+  background: color-mix(in srgb, var(--kcp) 11%, var(--card-color)) !important;
+  --n-text-color: var(--kcp);
+  --n-text-color-hover: var(--kcp);
+  --n-text-color-pressed: var(--kcp);
+}
+
+.kingdom-option-buttons
+  .n-button.kingdom-option:not(.kingdom-option--selected):not(.n-button--disabled):hover {
+  border-color: color-mix(in srgb, var(--kcp) 48%, var(--border-color)) !important;
+  background: color-mix(in srgb, var(--kcp) 19%, var(--card-color)) !important;
+}
+
+.kingdom-option-buttons .n-button.kingdom-option--selected {
+  background-color: var(--kcp) !important;
+  border-color: var(--kcp) !important;
+  color: #fff !important;
+  font-weight: 600;
+  --n-text-color: #fff;
+  --n-text-color-hover: #fff;
+  --n-text-color-pressed: #fff;
+}
+
+.kingdom-option-buttons .n-button.kingdom-option--selected.kingdom-option--shen {
+  background-color: #ebce02 !important;
+  border-color: #ebce02 !important;
+  color: #1a1a1a !important;
+  --n-text-color: #1a1a1a;
+  --n-text-color-hover: #1a1a1a;
+  --n-text-color-pressed: #1a1a1a;
+}
+
+.kingdom-option-buttons .n-button.kingdom-option--selected:not(.n-button--disabled):hover {
+  filter: brightness(0.94);
+}
+
+.kingdom-option-buttons .n-button.kingdom-option--shen.n-button--disabled {
+  opacity: 0.4;
+}

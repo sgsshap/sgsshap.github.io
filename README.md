@@ -1,10 +1,13 @@
-# open-shap2-web
-shap2开源版前端项目，是一个开源的三国杀卡牌制作器JxShap。该工具有许多丰富的功能，可供大家使用。
-> 此Github仓库由ChessBrainIsNotHuman从Gitee搬运。
-
 # JxShap
 
 > 新一代《三国杀》制图网站 —— 告别历史包袱，从0到1的彻底重构
+
+此开源版前端项目，是一个开源的三国杀卡牌制作器。该工具有许多丰富的功能，可供大家使用。
+
+> 此 Github 仓库由 ChessBrainIsNotHuman 从 Gitee 搬运。
+
+> 考虑到 gxkord 习惯用 Gitee，象棋脑又学业繁忙，进度可能会跟不上，尽情谅解。
+
 
 ## 🔉开发者 gxkord 说
 
@@ -51,7 +54,7 @@ JxShap 是一个从 0 到 1 重构的开源项目。抛弃所有陈旧的技术�
 
 ## 👉 访问地址
 
-**Github：**[JxShap 开源仓库]()https://github.com/sgsshap/open-shap2-web)
+**Github：**[JxShap 开源仓库](https://github.com/sgsshap/open-shap2-web)
 
 **Gitee：** [JxShap 开源仓库](https://gitee.com/gxkord/open-shap2-web)
 

@@ -1,0 +1,313 @@
+/**
+ * 移动端 / 内嵌 WebView 安全区与可视高度
+ * - viewport-fit=cover 后 env(safe-area-inset-*) 才生效
+ * - 100vh 在部分 WebView 会大于实际可视区，导致全屏层顶栏被裁切
+ * - --app-viewport-height-js 由 boot 写入可视高度（键盘弹起时收缩；页面双指缩放仍用 layout 尺寸）
+ */
+:root {
+  --safe-area-top: env(safe-area-inset-top, 0px);
+  --safe-area-bottom: env(safe-area-inset-bottom, 0px);
+  --safe-area-left: env(safe-area-inset-left, 0px);
+  --safe-area-right: env(safe-area-inset-right, 0px);
+
+  --app-viewport-width: var(--app-viewport-width-js, 100%);
+  --app-viewport-offset-top: var(--app-viewport-offset-top-js, 0px);
+  --app-viewport-offset-left: var(--app-viewport-offset-left-js, 0px);
+
+  --app-viewport-height: var(--app-viewport-height-js, 100vh);
+  --app-overlay-max-height: calc(
+    var(--app-viewport-height-js, 100vh) - var(--safe-area-top) - var(--safe-area-bottom)
+  );
+}
+
+@supports (height: 100dvh) {
+  :root {
+    --app-viewport-height: var(--app-viewport-height-js, 100dvh);
+    --app-overlay-max-height: calc(
+      var(--app-viewport-height-js, 100dvh) - var(--safe-area-top) - var(--safe-area-bottom)
+    );
+  }
+}
+
+@supports (height: 100svh) {
+  :root {
+    --app-viewport-height: var(--app-viewport-height-js, 100svh);
+    --app-overlay-max-height: calc(
+      var(--app-viewport-height-js, 100svh) - var(--safe-area-top) - var(--safe-area-bottom)
+    );
+  }
+}
+
+html,
+body,
+#app {
+  min-height: var(--app-viewport-height);
+}
+
+/*
+ * 移动端键盘弹起（尤其 iOS/iPadOS）：layout viewport 仍可能高于 visual viewport。
+ * shell 固定 top:0 + 高度随 visualViewport 收缩；layout 滚动由 mobileKeyboardViewport 锁定。
+ */
+@media (max-width: 1023px) {
+  html,
+  body {
+    overflow: hidden;
+    height: var(--app-viewport-height);
+    max-height: var(--app-viewport-height);
+    background-color: var(--body-color, #f7f7fa);
+  }
+
+  #app {
+    height: var(--app-viewport-height);
+    max-height: var(--app-viewport-height);
+    overflow: hidden;
+  }
+
+  .app-shell--narrow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 100%;
+    height: var(--app-viewport-height);
+    min-height: 0;
+    max-height: var(--app-viewport-height);
+    overflow: hidden;
+    z-index: 0;
+  }
+
+  body .app-shell--narrow .app-shell__tabbar {
+    position: absolute;
+  }
+
+  .app-shell--narrow .app-shell__content::after {
+    position: absolute;
+  }
+
+  .scroll-to-top-fab.scroll-to-top-fab--narrow {
+    position: absolute;
+  }
+
+  /*
+   * iOS Edge（EdgiOS）：WebKit 壳层键盘 viewport bug，不做 fixed/JS 干预，走原生滚动。
+   */
+  html.browser-edge-ios.mobile-layout,
+  html.browser-edge-ios.mobile-layout body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    -webkit-overflow-scrolling: touch;
+    background-color: var(--body-color, #f7f7fa);
+  }
+
+  html.browser-edge-ios.mobile-layout #app {
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    overflow: visible;
+  }
+
+  html.browser-edge-ios.mobile-layout .app-shell--narrow {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    overflow: visible;
+  }
+
+  html.browser-edge-ios.mobile-layout .app-shell--narrow .app-shell__content::after {
+    position: fixed;
+  }
+
+  html.browser-edge-ios.mobile-layout body .app-shell--narrow .app-shell__tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  html.browser-edge-ios.mobile-layout .scroll-to-top-fab.scroll-to-top-fab--narrow {
+    position: fixed;
+  }
+
+  html.browser-edge-ios.mobile-layout .n-drawer .n-drawer-content,
+  html.browser-edge-ios.mobile-layout .n-drawer.n-drawer--bottom-placement .n-drawer-content {
+    max-height: 100dvh;
+  }
+
+  html.browser-edge-ios.mobile-layout .n-drawer.n-drawer--right-placement .diy-drawer-shell,
+  html.browser-edge-ios.mobile-layout .n-drawer.n-drawer--left-placement .diy-drawer-shell {
+    height: 100dvh;
+    max-height: 100dvh;
+  }
+
+  /* Chromium Edge 移动版 */
+  html.browser-edge.mobile-layout:not(.browser-edge-ios),
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    height: auto;
+    max-height: none;
+    min-height: 100dvh;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) #app {
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    overflow: visible;
+  }
+
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) .app-shell--narrow {
+    position: relative;
+    top: auto;
+    left: auto;
+    right: auto;
+    width: 100%;
+    height: auto;
+    min-height: 100dvh;
+    max-height: none;
+    overflow: visible;
+  }
+
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) .app-shell--narrow .app-shell__content::after {
+    position: fixed;
+  }
+
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) body .app-shell--narrow .app-shell__tabbar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+
+  html.browser-edge.mobile-layout:not(.browser-edge-ios) .scroll-to-top-fab.scroll-to-top-fab--narrow {
+    position: fixed;
+  }
+
+  html.browser-edge.mobile-layout.keyboard-open:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--right-placement,
+  html.browser-edge.mobile-layout.keyboard-open:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--left-placement,
+  html.browser-edge.mobile-layout.keyboard-open:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--bottom-placement,
+  html.browser-edge.mobile-layout.keyboard-open:not(.browser-edge-ios) .n-drawer-container .n-drawer-mask {
+    height: var(--app-viewport-height) !important;
+    max-height: var(--app-viewport-height) !important;
+    top: 0 !important;
+    bottom: auto !important;
+  }
+
+  /* 抽屉 teleport 到 body，须单独限制在 visualViewport 高度内（EdgiOS 除外） */
+  html:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--right-placement,
+  html:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--left-placement,
+  html:not(.browser-edge-ios) .n-drawer-container .n-drawer.n-drawer--bottom-placement {
+    height: var(--app-viewport-height) !important;
+    max-height: var(--app-viewport-height) !important;
+    top: 0 !important;
+    bottom: auto !important;
+  }
+
+  html:not(.browser-edge-ios) .n-drawer-container .n-drawer-mask {
+    height: var(--app-viewport-height) !important;
+    max-height: var(--app-viewport-height) !important;
+    top: 0 !important;
+    bottom: auto !important;
+  }
+}
+
+/* ---------- Naive UI 抽屉（全站） ---------- */
+@media (max-width: 1023px) {
+  .n-drawer .n-drawer-content {
+    display: flex;
+    flex-direction: column;
+    max-height: var(--app-overlay-max-height);
+  }
+
+  .n-drawer.n-drawer--bottom-placement .n-drawer-content {
+    height: var(--app-overlay-max-height);
+  }
+
+  .n-drawer.n-drawer--right-placement .n-drawer-body,
+  .n-drawer.n-drawer--left-placement .n-drawer-body {
+    max-height: var(--app-overlay-max-height);
+  }
+
+  .n-drawer.n-drawer--right-placement .diy-drawer-shell,
+  .n-drawer.n-drawer--left-placement .diy-drawer-shell {
+    height: var(--app-overlay-max-height);
+    max-height: var(--app-overlay-max-height);
+  }
+
+  .n-drawer .n-drawer-content > .n-drawer-header {
+    flex-shrink: 0;
+  }
+
+  /* diy-drawer-content 在 drawer-layout.css 中单独处理 padding */
+  .n-drawer .n-drawer-content:not(.diy-drawer-content) > .n-drawer-header {
+    padding-top: calc(12px + var(--safe-area-top));
+  }
+
+  .n-drawer .n-drawer-content .n-drawer-body {
+    flex: 1;
+    min-height: 0;
+  }
+
+  .n-drawer .n-drawer-content .n-drawer-body-content-wrapper {
+    min-height: 0;
+  }
+}
+
+/* ---------- Naive UI 弹窗 / 对话框（全站） ---------- */
+@media (max-width: 1023px) {
+  .n-modal-container .n-modal.n-card {
+    max-height: var(--app-overlay-max-height);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .n-modal-container .n-modal.n-card > .n-card-header {
+    flex-shrink: 0;
+    padding-top: calc(16px + var(--safe-area-top));
+  }
+
+  .n-modal-container .n-modal.n-card > .n-card__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .n-modal-container .n-modal.n-card > .n-card__footer {
+    flex-shrink: 0;
+    padding-bottom: calc(12px + var(--safe-area-bottom));
+  }
+
+  .n-dialog {
+    max-height: calc(var(--app-overlay-max-height) - 24px);
+    display: flex;
+    flex-direction: column;
+    margin-top: calc(12px + var(--safe-area-top));
+    margin-bottom: calc(12px + var(--safe-area-bottom));
+  }
+
+  .n-dialog .n-dialog__title {
+    flex-shrink: 0;
+  }
+
+  .n-dialog .n-dialog__content {
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .n-dialog .n-dialog__action {
+    flex-shrink: 0;
+    padding-bottom: var(--safe-area-bottom);
+  }
+}

@@ -1,0 +1,348 @@
+/**
+ * DIY 制图页抽屉内边距（详细设置、百科/角标搜索等）
+ * 断点：1023px（制图 PC 弹层阈值 - 1）、640px（小屏手机）
+ */
+:root {
+  --diy-drawer-padding-x: 20px;
+  --diy-drawer-padding-y: 16px;
+  --diy-drawer-padding-top: var(--diy-drawer-padding-y);
+  --diy-drawer-detail-padding-top: calc(var(--diy-drawer-padding-y) + 10px);
+  --diy-drawer-padding-bottom: calc(
+    var(--diy-drawer-padding-y) + var(--safe-area-bottom, env(safe-area-inset-bottom, 0px))
+  );
+  --diy-drawer-header-padding-y: 12px;
+  --diy-drawer-header-min-height: 34px;
+  --diy-drawer-content-gap: 16px;
+  --diy-drawer-toolbar-padding-top: 12px;
+  --diy-drawer-toolbar-padding-bottom: 10px;
+  --diy-drawer-scroll-padding-y: 12px;
+  --diy-drawer-scroll-padding-bottom: 12px;
+  --diy-drawer-title-size: 16px;
+  --diy-drawer-title-weight: 600;
+  --diy-drawer-title-line-height: 1.35;
+  --diy-drawer-page-title-size: 20px;
+  --diy-drawer-page-title-line-height: 1.3;
+  --diy-drawer-section-title-size: 14px;
+  --diy-drawer-list-title-size: 15px;
+}
+
+@media (max-width: 1023px) {
+  :root {
+    --diy-drawer-padding-x: 18px;
+    --diy-drawer-padding-y: 14px;
+    --diy-drawer-detail-padding-top: calc(var(--diy-drawer-padding-y) + 8px);
+    --diy-drawer-toolbar-padding-top: 10px;
+    --diy-drawer-toolbar-padding-bottom: 8px;
+    --diy-drawer-scroll-padding-y: 10px;
+  }
+}
+
+@media (max-width: 640px) {
+  :root {
+    --diy-drawer-padding-x: 16px;
+    --diy-drawer-padding-y: 12px;
+    --diy-drawer-detail-padding-top: calc(var(--diy-drawer-padding-y) + 8px);
+    --diy-drawer-header-padding-y: 10px;
+    --diy-drawer-content-gap: 12px;
+    --diy-drawer-toolbar-padding-top: 8px;
+    --diy-drawer-toolbar-padding-bottom: 8px;
+    --diy-drawer-scroll-padding-y: 10px;
+    --diy-drawer-scroll-padding-bottom: 10px;
+    --diy-drawer-page-title-size: 18px;
+  }
+}
+
+/* 抽屉顶栏行：左/右固定宽操作区 + 中间标题，列表/详情/详细设置共用 */
+.diy-drawer-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-height: var(--diy-drawer-header-min-height);
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.diy-drawer-bar__leading,
+.diy-drawer-bar__trailing {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+}
+
+.diy-drawer-bar__trailing {
+  margin-left: auto;
+}
+
+/* 抽屉顶栏标题（详细设置、百科搜索、详情返回） */
+.diy-drawer-title {
+  margin: 0;
+  flex: 1;
+  min-width: 0;
+  font-size: var(--diy-drawer-title-size);
+  font-weight: var(--diy-drawer-title-weight);
+  line-height: var(--diy-drawer-title-line-height);
+  color: var(--text-color-1);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 抽屉详情页主标题 */
+.diy-drawer-page-title {
+  margin: 0;
+  font-size: var(--diy-drawer-page-title-size);
+  font-weight: var(--diy-drawer-title-weight);
+  line-height: var(--diy-drawer-page-title-line-height);
+  color: var(--text-color-1);
+}
+
+/* 抽屉内区块标题 */
+.diy-drawer-section-title {
+  margin: 0;
+  font-size: var(--diy-drawer-section-title-size);
+  font-weight: var(--diy-drawer-title-weight);
+  line-height: var(--diy-drawer-title-line-height);
+  color: var(--text-color-1);
+}
+
+.diy-drawer-section-title--accent {
+  padding-left: 10px;
+  border-left: 3px solid var(--primary-color);
+}
+
+.diy-drawer-section-title--muted {
+  font-weight: 500;
+  color: var(--text-color-3);
+}
+
+/* 搜索列表卡片标题 */
+.diy-drawer-list-title {
+  font-size: var(--diy-drawer-list-title-size);
+  font-weight: var(--diy-drawer-title-weight);
+  line-height: var(--diy-drawer-title-line-height);
+  color: var(--text-color-1);
+  word-break: break-word;
+}
+
+/*
+ * 百科 / 角标搜索列表卡片（button）
+ * iOS：去掉系统蓝框焦点环；触控端不用 :hover，避免点击后边框「粘」在主色上
+ */
+.wiki-search-panel__card,
+.material-search-panel__card {
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.wiki-search-panel__card:focus,
+.material-search-panel__card:focus {
+  outline: none;
+}
+
+.wiki-search-panel__card:focus-visible,
+.material-search-panel__card:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .wiki-search-panel__card:hover:not(:disabled),
+  .material-search-panel__card:hover:not(:disabled) {
+    border-color: var(--primary-color);
+    background: color-mix(in srgb, var(--primary-color) 8%, var(--card-color));
+  }
+}
+
+/* 自定义壳层抽屉（详细设置等，直接放在 n-drawer 默认插槽） */
+.diy-drawer-shell {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--body-color);
+}
+
+.diy-drawer-shell__header {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-height: calc(
+    var(--diy-drawer-header-min-height) + var(--diy-drawer-header-padding-y) * 2
+  );
+  padding: var(--diy-drawer-header-padding-y) var(--diy-drawer-padding-x);
+  background: var(--card-color);
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 1023px) {
+  .diy-drawer-shell__header {
+    padding-top: calc(var(--diy-drawer-header-padding-y) + var(--safe-area-top, env(safe-area-inset-top, 0px)));
+  }
+}
+
+.diy-drawer-shell__header .diy-drawer-bar {
+  flex: 1;
+  min-width: 0;
+}
+
+.diy-drawer-shell__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: var(--diy-drawer-padding-y) var(--diy-drawer-padding-x);
+  padding-bottom: var(--diy-drawer-padding-bottom);
+}
+
+/* n-drawer-content 抽屉（百科 / 角标搜索） */
+.diy-drawer-content.n-drawer-content .n-drawer-header {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  flex-shrink: 0;
+  min-height: calc(
+    var(--diy-drawer-header-min-height) + var(--diy-drawer-header-padding-y) * 2
+  );
+  padding: var(--diy-drawer-header-padding-y) var(--diy-drawer-padding-x) !important;
+  border-bottom: 1px solid var(--border-color);
+}
+
+@media (max-width: 1023px) {
+  .diy-drawer-content.n-drawer-content .n-drawer-header {
+    padding-top: calc(
+      var(--diy-drawer-header-padding-y) + var(--safe-area-top, env(safe-area-inset-top, 0px))
+    ) !important;
+  }
+}
+
+.diy-drawer-content.n-drawer-content .n-drawer-header__main {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.diy-drawer-content.n-drawer-content .n-drawer-body-content-wrapper {
+  padding-left: var(--diy-drawer-padding-x);
+  padding-right: var(--diy-drawer-padding-x);
+  padding-bottom: var(--diy-drawer-padding-bottom);
+}
+
+.diy-drawer-content--detail.n-drawer-content .n-drawer-body-content-wrapper {
+  padding: 0;
+  background: var(--body-color);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.diy-drawer-panel--detail-scroll {
+  flex: 1;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  box-sizing: border-box;
+  padding: var(--diy-drawer-detail-padding-top) var(--diy-drawer-padding-x) 0;
+  scroll-padding-bottom: calc(64px + env(safe-area-inset-bottom, 0px));
+  scrollbar-gutter: stable;
+  -webkit-overflow-scrolling: touch;
+}
+
+.diy-detail-panel__footer-bar,
+.diy-drawer-footer {
+  position: sticky;
+  bottom: 0;
+  z-index: 2;
+  flex-shrink: 0;
+  margin-top: var(--diy-drawer-content-gap);
+  padding: 10px 0 calc(10px + env(safe-area-inset-bottom, 0px));
+  background: transparent;
+  border-top: 1px solid color-mix(in srgb, var(--border-color) 45%, transparent);
+}
+
+/* 详情页底部主操作：实心主色按钮（不受主题线框/半透明底影响） */
+.diy-detail-panel__footer-bar .n-button.n-button--primary-type:not(.n-button--disabled),
+.diy-drawer-footer .n-button.n-button--primary-type:not(.n-button--disabled) {
+  --n-color: var(--primary-color) !important;
+  --n-color-hover: var(--primary-color-hover) !important;
+  --n-color-pressed: var(--primary-color-pressed) !important;
+  --n-color-focus: var(--primary-color) !important;
+  --n-border: none !important;
+  --n-border-hover: none !important;
+  --n-border-pressed: none !important;
+  --n-border-focus: none !important;
+  background-color: var(--primary-color) !important;
+  background-image: none !important;
+  box-shadow: none !important;
+  opacity: 1 !important;
+  font-weight: 600;
+}
+
+.diy-detail-panel__footer-bar .n-button.n-button--primary-type:not(.n-button--disabled) .n-icon,
+.diy-drawer-footer .n-button.n-button--primary-type:not(.n-button--disabled) .n-icon {
+  color: inherit !important;
+}
+
+/* 浅色：深主色底 + 白字（勿用 --inverted-color，Naive light 下常为黑字） */
+body.light .diy-detail-panel__footer-bar .n-button.n-button--primary-type:not(.n-button--disabled),
+body.light .diy-drawer-footer .n-button.n-button--primary-type:not(.n-button--disabled) {
+  --n-text-color: #fff !important;
+  --n-text-color-hover: rgba(255, 255, 255, 0.92) !important;
+  --n-text-color-pressed: rgba(255, 255, 255, 0.85) !important;
+  --n-text-color-focus: #fff !important;
+  color: #fff !important;
+}
+
+/* 深色：浅主色底 + 深字（与 theme Button.textColorPrimary 一致） */
+body.dark .diy-detail-panel__footer-bar .n-button.n-button--primary-type:not(.n-button--disabled),
+body.dark .diy-drawer-footer .n-button.n-button--primary-type:not(.n-button--disabled) {
+  --n-text-color: rgba(0, 0, 0, 0.88) !important;
+  --n-text-color-hover: rgba(0, 0, 0, 0.82) !important;
+  --n-text-color-pressed: rgba(0, 0, 0, 0.72) !important;
+  --n-text-color-focus: rgba(0, 0, 0, 0.88) !important;
+  color: rgba(0, 0, 0, 0.88) !important;
+}
+
+.diy-drawer-content--search-list.n-drawer-content {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.diy-drawer-content--search-list.n-drawer-content .n-drawer-body {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.diy-drawer-content--search-list.n-drawer-content .n-drawer-body-content-wrapper {
+  flex: 1;
+  min-height: 0;
+  height: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.diy-drawer-panel {
+  display: flex;
+  flex-direction: column;
+  gap: var(--diy-drawer-content-gap);
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.diy-drawer-panel--fill {
+  flex: 1;
+  min-height: 0;
+  gap: 0;
+}
+
+.diy-drawer-panel--flat {
+  gap: 0;
+}

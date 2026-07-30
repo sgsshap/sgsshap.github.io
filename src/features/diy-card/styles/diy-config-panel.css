@@ -1,0 +1,156 @@
+/**
+ * DIY 制图页：配置区折叠面板（中性 inset + primary 边框点缀）
+ * 适用 .diy-card-pc / .diy-card-mobile 内所有 n-collapse
+ */
+@import './kingdom-option-buttons.css';
+
+.diy-card-pc,
+.diy-card-mobile {
+  --page-p: 20px;
+  --page-inset: 16px;
+  --page-gap: 16px;
+  --page-r: 12px;
+}
+
+.diy-card-pc .n-collapse-item__header,
+.diy-card-mobile .n-collapse-item__header {
+  padding: var(--diy-collapse-header-pad-y, 10px) var(--page-inset) !important;
+  border-radius: calc(var(--page-r) - 2px);
+  border: 1px solid color-mix(in srgb, var(--primary-color) 18%, var(--border-color));
+  background: color-mix(in srgb, var(--body-color) 48%, var(--card-color));
+  color: var(--text-color-base);
+  font-weight: 700;
+  margin-bottom: clamp(4px, calc(100vh * 6 / 900), 6px);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
+  user-select: none;
+}
+
+.diy-card-pc .n-collapse-item__header:hover,
+.diy-card-mobile .n-collapse-item__header:hover {
+  border-color: color-mix(in srgb, var(--primary-color) 32%, var(--border-color));
+  background: color-mix(
+    in srgb,
+    var(--primary-color) 5%,
+    color-mix(in srgb, var(--body-color) 48%, var(--card-color))
+  );
+  color: var(--text-color-base);
+  cursor: pointer;
+}
+
+/* 模板介绍：内容卡（label 由 n-form-item 与表单项对齐） */
+.diy-config__template-card-body {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  min-width: 0;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 14px 16px 13px;
+  border-radius: calc(var(--page-r) - 2px);
+  border: 1px solid color-mix(in srgb, var(--primary-color) 22%, var(--border-color));
+  background:
+    radial-gradient(
+      ellipse 88% 62% at 100% 0%,
+      color-mix(in srgb, var(--primary-color) 11%, transparent) 0%,
+      transparent 56%
+    ),
+    linear-gradient(
+      158deg,
+      color-mix(in srgb, var(--primary-color) 7%, var(--card-color)) 0%,
+      var(--card-color) 62%,
+      color-mix(in srgb, var(--primary-color-suppl) 10%, var(--card-color)) 100%
+    );
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--primary-color) 12%, transparent);
+}
+
+.diy-config__template-desc {
+  position: relative;
+  margin: 0;
+  padding-left: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+  color: var(--text-color-base);
+}
+
+.diy-config__template-desc::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 4px;
+  bottom: 4px;
+  width: 3px;
+  border-radius: 2px;
+  background: linear-gradient(
+    180deg,
+    var(--primary-color) 0%,
+    color-mix(in srgb, var(--primary-color) 48%, transparent) 100%
+  );
+}
+
+.diy-config__template-meta-group {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.diy-config__template-meta {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-color-2);
+}
+
+.diy-config__template-meta--authors {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 4px 8px;
+}
+
+.diy-config__template-meta-key {
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: color-mix(in srgb, var(--primary-color) 72%, var(--text-color-2));
+}
+
+.diy-config__template-features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 8px;
+  margin: 0;
+  padding-top: 10px;
+  border-top: 1px solid color-mix(in srgb, var(--primary-color) 14%, var(--divider-color));
+}
+
+.diy-config__template-feature {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 10px 4px 7px;
+  border-radius: 999px;
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--text-color-base);
+  white-space: nowrap;
+  background: color-mix(in srgb, var(--primary-color) 7%, var(--card-color));
+  border: 1px solid color-mix(in srgb, var(--primary-color) 18%, var(--border-color));
+}
+
+@media (max-width: 520px) {
+  .diy-card-pc,
+  .diy-card-mobile {
+    --page-p: 12px;
+    --page-inset: 14px;
+  }
+
+  .diy-config__template-card-body {
+    padding: 13px 14px 12px;
+  }
+}

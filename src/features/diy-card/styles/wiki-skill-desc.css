@@ -1,0 +1,29 @@
+.wiki-skill-desc {
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+  word-break: break-word;
+}
+
+.wiki-skill-desc__bold {
+  font-weight: 600;
+  text-shadow:
+    0 0 0.6px currentColor,
+    0 0 0.6px currentColor;
+}
+
+.wiki-skill-desc__full {
+  padding: 0 0.2em;
+}
+
+.wiki-skill-desc :is(i, em) {
+  font-style: italic;
+}
+
+.wiki-skill-desc :is(u) {
+  text-decoration: underline;
+}
+
+.wiki-skill-desc :is(s) {
+  text-decoration: line-through;
+}

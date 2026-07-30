@@ -1,0 +1,325 @@
+/* 赤壁战火：江火映舟 · 水火氛围（theme-chibi） */
+
+html:has(body.theme-chibi:not(.dark)) {
+  --chibi-water-r: 58;
+  --chibi-water-g: 124;
+  --chibi-water-b: 154;
+  --chibi-fire-r: 204;
+  --chibi-fire-g: 58;
+  --chibi-fire-b: 46;
+  --chibi-mist-r: 78;
+  --chibi-mist-g: 108;
+  --chibi-mist-b: 138;
+}
+
+html:has(body.dark.theme-chibi) {
+  --chibi-water-r: 86;
+  --chibi-water-g: 156;
+  --chibi-water-b: 188;
+  --chibi-fire-r: 242;
+  --chibi-fire-g: 92;
+  --chibi-fire-b: 72;
+  --chibi-mist-r: 52;
+  --chibi-mist-g: 78;
+  --chibi-mist-b: 104;
+}
+
+.theme-chibi .n-layout-scroll-container,
+.theme-chibi .n-layout,
+.dark.theme-chibi .n-layout-scroll-container,
+.dark.theme-chibi .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+/* ---------- 大卡片：江面冷色 + 底部火光（纯氛围，无角标几何） ---------- */
+.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-chibi .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.2) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 90% 55% at 50% -8%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.18) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 50% 85% at -5% 45%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.14) 0%,
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 85% 55% at 50% 108%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.16) 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.08) 38%,
+      transparent 68%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.06) 0%,
+      transparent 42%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.05) 100%
+    );
+  box-shadow:
+    0 16px 40px -16px rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.2),
+    0 12px 32px -12px rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.1);
+}
+
+.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-chibi .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+/* 上层：烟幕斜带 + 右下烬光晕染（非方块、非线段） */
+.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::before,
+.theme-chibi .home-view__panel::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  border-radius: inherit;
+  background:
+    linear-gradient(
+      155deg,
+      transparent 0%,
+      transparent 38%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.07) 52%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.04) 58%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 52% 42% at 96% 96%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.2) 0%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.08) 42%,
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 38% 32% at 8% 12%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.1) 0%,
+      transparent 70%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.22) 12%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.32) 50%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.22) 88%,
+      transparent 100%
+    ) top 0 / 100% 1px no-repeat,
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.1) 8%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.26) 50%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.1) 92%,
+      transparent 100%
+    ) bottom 0 / 100% 1px no-repeat;
+  opacity: 0.9;
+}
+
+.dark.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-chibi .home-view__panel {
+  border-color: rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.16) !important;
+  background-image:
+    radial-gradient(
+      ellipse 88% 52% at 50% -6%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.16) 0%,
+      transparent 56%
+    ),
+    radial-gradient(
+      ellipse 48% 80% at -4% 48%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.16) 0%,
+      transparent 66%
+    ),
+    radial-gradient(
+      ellipse 82% 52% at 50% 106%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.2) 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.1) 36%,
+      transparent 66%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.08) 0%,
+      transparent 44%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.08) 100%
+    );
+  box-shadow:
+    0 20px 48px -14px rgba(0, 0, 0, 0.5),
+    0 14px 36px -12px rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.14);
+}
+
+.dark.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::before,
+.dark.theme-chibi .home-view__panel::before {
+  opacity: 0.95;
+  background:
+    linear-gradient(
+      155deg,
+      transparent 0%,
+      transparent 36%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.1) 50%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.05) 58%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 54% 44% at 96% 96%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.24) 0%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.1) 40%,
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 36% 30% at 8% 12%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.12) 0%,
+      transparent 68%
+    ),
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.18) 12%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.28) 50%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.18) 88%,
+      transparent 100%
+    ) top 0 / 100% 1px no-repeat,
+    linear-gradient(
+      90deg,
+      transparent 0%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.08) 8%,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.22) 50%,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.08) 92%,
+      transparent 100%
+    ) bottom 0 / 100% 1px no-repeat;
+}
+
+/* 底层：细波纹 + 江心雾带 + 水底反光 */
+.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::after,
+.theme-chibi .home-view__panel::after {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  border-radius: inherit;
+  opacity: 0.65;
+  background:
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 13px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.022) 13px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.022) 14px
+    ),
+    linear-gradient(
+      180deg,
+      transparent 0%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.06) 44%,
+      rgba(var(--chibi-mist-r), var(--chibi-mist-g), var(--chibi-mist-b), 0.03) 50%,
+      transparent 56%
+    ),
+    radial-gradient(ellipse 75% 40% at 22% 100%, rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.12) 0%, transparent 72%),
+    radial-gradient(ellipse 60% 35% at 78% 100%, rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.1) 0%, transparent 70%);
+}
+
+.dark.theme-chibi .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog)::after,
+.dark.theme-chibi .home-view__panel::after {
+  opacity: 0.72;
+}
+
+/* 题头：透明底 + 端饰 + 清晰水火分割线（不与内容背景分裂） */
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header,
+.theme-chibi .home-view__block-head {
+  position: relative;
+  background: transparent !important;
+}
+
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header {
+  padding-bottom: 14px !important;
+}
+
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header + .n-card__content {
+  padding-top: 18px !important;
+}
+
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header__main,
+.theme-chibi .home-view__block-title {
+  font-family: "Songti SC", "SimSun", serif;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+/* 端饰：左水、右火圆点 */
+.theme-chibi .home-view__block-head::before,
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::before {
+  content: "";
+  pointer-events: none;
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 10px;
+  background:
+    radial-gradient(
+      circle at 5px 5px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.72) 0 3px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.22) 3px 4px,
+      transparent 4.5px
+    ),
+    radial-gradient(
+      circle at calc(100% - 5px) 5px,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.72) 0 3px,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.22) 3px 4px,
+      transparent 4.5px
+    );
+}
+
+/* 主分割线：蓝→红→蓝渐变，清晰无 blur */
+.theme-chibi .home-view__block-head::after,
+.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  right: 14px;
+  bottom: 4px;
+  height: 2px;
+  border-radius: 1px;
+  background: linear-gradient(
+    90deg,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.35) 0%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.55) 22%,
+    rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.62) 50%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.55) 78%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.35) 100%
+  );
+}
+
+.dark.theme-chibi .home-view__block-head::before,
+.dark.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::before {
+  background:
+    radial-gradient(
+      circle at 5px 5px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.82) 0 3px,
+      rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.28) 3px 4px,
+      transparent 4.5px
+    ),
+    radial-gradient(
+      circle at calc(100% - 5px) 5px,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.82) 0 3px,
+      rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.28) 3px 4px,
+      transparent 4.5px
+    );
+}
+
+.dark.theme-chibi .home-view__block-head::after,
+.dark.theme-chibi .n-card:not(.n-modal):not(.n-dialog) > .n-card-header::after {
+  background: linear-gradient(
+    90deg,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.42) 0%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.62) 22%,
+    rgba(var(--chibi-fire-r), var(--chibi-fire-g), var(--chibi-fire-b), 0.7) 50%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.62) 78%,
+    rgba(var(--chibi-water-r), var(--chibi-water-g), var(--chibi-water-b), 0.42) 100%
+  );
+}

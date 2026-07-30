@@ -1,0 +1,82 @@
+/* 魏：威定中原 — 近白/墨蓝灰卡片 + 极淡魏武蓝氛围（theme-wei） */
+
+html:has(body.theme-wei:not(.dark)) {
+  --wei-accent-r: 88;
+  --wei-accent-g: 146;
+  --wei-accent-b: 189;
+  --wei-deep-r: 79;
+  --wei-deep-g: 102;
+  --wei-deep-b: 127;
+}
+
+html:has(body.dark.theme-wei) {
+  --wei-accent-r: 118;
+  --wei-accent-g: 168;
+  --wei-accent-b: 212;
+  --wei-deep-r: 208;
+  --wei-deep-g: 216;
+  --wei-deep-b: 226;
+}
+
+.theme-wei .n-layout-scroll-container,
+.theme-wei .n-layout,
+.dark.theme-wei .n-layout-scroll-container,
+.dark.theme-wei .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.theme-wei .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-wei .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--wei-deep-r), var(--wei-deep-g), var(--wei-deep-b), 0.12) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 85% 48% at 50% -6%,
+      rgba(var(--wei-accent-r), var(--wei-accent-g), var(--wei-accent-b), 0.08) 0%,
+      transparent 58%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.72) 0%,
+      transparent 42%,
+      rgba(var(--wei-accent-r), var(--wei-accent-g), var(--wei-accent-b), 0.025) 100%
+    );
+  box-shadow:
+    0 10px 28px -14px rgba(var(--wei-deep-r), var(--wei-deep-g), var(--wei-deep-b), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.theme-wei .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-wei .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-wei .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-wei .home-view__panel {
+  border-color: rgba(var(--wei-deep-r), var(--wei-deep-g), var(--wei-deep-b), 0.1) !important;
+  background-image:
+    radial-gradient(
+      ellipse 75% 42% at 50% 0%,
+      rgba(var(--wei-accent-r), var(--wei-accent-g), var(--wei-accent-b), 0.09) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 45% 70% at 100% 80%,
+      rgba(var(--wei-accent-r), var(--wei-accent-g), var(--wei-accent-b), 0.05) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 48%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+  box-shadow:
+    0 14px 36px -18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}

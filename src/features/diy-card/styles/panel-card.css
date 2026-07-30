@@ -1,0 +1,61 @@
+/* DIY 预览区：操作元素 / 自定义素材 / 导出设置 — section-panel 对齐 */
+.diy-panel-card.n-card {
+  width: 100%;
+  max-width: var(--diy-card-max-width);
+  margin-inline: auto;
+  border: 1px solid color-mix(in srgb, var(--primary-color) 20%, var(--border-color)) !important;
+  border-radius: var(--page-r, 12px) !important;
+  background: var(--card-color) !important;
+  --n-border-radius: var(--page-r, 12px);
+}
+
+.diy-panel-card.n-card > .n-card-header {
+  display: flex;
+  align-items: center;
+  padding: 16px 18px 12px !important;
+  border-bottom: 1px solid var(--divider-color);
+}
+
+.diy-panel-card.n-card > .n-card-header .n-card-header__main {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 28px;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 1.35;
+  color: var(--text-color-base);
+}
+
+.diy-panel-card.n-card > .n-card-header .n-card-header__main::before {
+  content: '';
+  width: 5px;
+  height: 1.05em;
+  flex-shrink: 0;
+  border-radius: 3px;
+  background: linear-gradient(
+    180deg,
+    var(--primary-color) 0%,
+    color-mix(in srgb, var(--primary-color) 55%, transparent) 100%
+  );
+}
+
+.diy-panel-card.n-card > .n-card-header .n-card-header__extra {
+  display: flex;
+  align-items: center;
+}
+
+.diy-panel-card.n-card > .n-card__content {
+  padding: 16px 18px 18px !important;
+}
+
+.diy-panel-card--collapsed.n-card > .n-card-header {
+  margin-bottom: 0 !important;
+  border-bottom: none;
+}
+
+.diy-panel-card--collapsed.n-card > .n-card__content {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  min-height: 0;
+}

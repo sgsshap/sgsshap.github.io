@@ -1,0 +1,28 @@
+/*
+ * 首页：大板块走主题纹样，内层 inset 全主题统一中性样式。
+ */
+
+.home-view__mini-card.n-card::before,
+.home-view__mini-card.n-card::after,
+.home-view__inset::before,
+.home-view__inset::after {
+  display: none !important;
+}
+
+.home-view__mini-card.n-card {
+  background-color: color-mix(in srgb, var(--body-color) 48%, var(--card-color)) !important;
+  background-image: none !important;
+  border: 1px solid var(--border-color) !important;
+  border-radius: 12px !important;
+  box-shadow: none !important;
+}
+
+.theme-shuimo .home-view__section-title {
+  font-family: "Songti SC", "SimSun", serif;
+  letter-spacing: 0.04em;
+  font-weight: 600;
+}
+
+.theme-chibi .home-view__section-title {
+  letter-spacing: 0.06em;
+}

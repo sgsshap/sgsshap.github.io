@@ -1,0 +1,87 @@
+/* 晋：一统山河 — 近白/墨紫灰卡片 + 极淡紫韵氛围（theme-jin） */
+
+html:has(body.theme-jin:not(.dark)) {
+  --jin-accent-r: 99;
+  --jin-accent-g: 125;
+  --jin-accent-b: 190;
+  --jin-deep-r: 88;
+  --jin-deep-g: 78;
+  --jin-deep-b: 126;
+}
+
+html:has(body.dark.theme-jin) {
+  --jin-accent-r: 148;
+  --jin-accent-g: 173;
+  --jin-accent-b: 241;
+  --jin-deep-r: 218;
+  --jin-deep-g: 214;
+  --jin-deep-b: 232;
+}
+
+.theme-jin .n-layout-scroll-container,
+.theme-jin .n-layout,
+.dark.theme-jin .n-layout-scroll-container,
+.dark.theme-jin .n-layout {
+  background-color: transparent !important;
+  background-image: none;
+}
+
+.theme-jin .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.theme-jin .home-view__panel {
+  position: relative;
+  overflow: hidden;
+  border-radius: 8px !important;
+  border: 1px solid rgba(var(--jin-deep-r), var(--jin-deep-g), var(--jin-deep-b), 0.12) !important;
+  background-color: var(--card-color) !important;
+  background-image:
+    radial-gradient(
+      ellipse 84% 48% at 50% -6%,
+      rgba(var(--jin-accent-r), var(--jin-accent-g), var(--jin-accent-b), 0.08) 0%,
+      transparent 58%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 92% 100%,
+      rgba(var(--jin-deep-r), var(--jin-deep-g), var(--jin-deep-b), 0.05) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.7) 0%,
+      transparent 42%,
+      rgba(var(--jin-accent-r), var(--jin-accent-g), var(--jin-accent-b), 0.025) 100%
+    );
+  box-shadow:
+    0 10px 28px -14px rgba(var(--jin-deep-r), var(--jin-deep-g), var(--jin-deep-b), 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.62);
+}
+
+.theme-jin .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog) > *,
+.theme-jin .home-view__panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.dark.theme-jin .n-card:not(.home-view__mini-card):not(.n-modal):not(.n-dialog),
+.dark.theme-jin .home-view__panel {
+  border-color: rgba(var(--jin-deep-r), var(--jin-deep-g), var(--jin-deep-b), 0.1) !important;
+  background-image:
+    radial-gradient(
+      ellipse 75% 42% at 50% 0%,
+      rgba(var(--jin-accent-r), var(--jin-accent-g), var(--jin-accent-b), 0.09) 0%,
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse 48% 68% at 100% 80%,
+      rgba(var(--jin-deep-r), var(--jin-deep-g), var(--jin-deep-b), 0.06) 0%,
+      transparent 62%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(255, 255, 255, 0.03) 0%,
+      transparent 48%,
+      rgba(0, 0, 0, 0.12) 100%
+    );
+  box-shadow:
+    0 14px 36px -18px rgba(0, 0, 0, 0.55),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}

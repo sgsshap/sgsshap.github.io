@@ -1,0 +1,223 @@
+/* 字体文件在 ./woff2/ 子目录，url 相对本 CSS 便于 IDE 校验。
+ * 本文件链接由 vite 注入 ?v=<content-hash>，改 @font-face 后重新部署即可，无需用户强刷。
+ * 若替换同名 .woff2 文件，请在文件名中加版本号（如 LiShu-v2.woff2）并同步改 url。
+ *
+ * 文件命名：
+ * - 有官方英文产品名/文件名的 → 英文（FZ* 方正、HY* 汉仪、DF* 华康、Microsoft*、Adobe* 等）
+ * - 无官方英文文件名的 → 保留中文（如金梅毛草行），版本号/GBK 等后缀保留
+ * font-family：发布者正式名；文件名带 Numeric / _EN / Medium 等变体后缀时，
+ * font-family 同步保留该后缀，避免日后补全字库时与完整版冲突。 */
+
+/* =============================================================================
+ * 站点 UI 正文字体（设置页可切换；Konva 制图不使用此区 font-family）
+ * ============================================================================= */
+
+@font-face {
+  font-family: '霞鹜文楷';
+  src: url('./woff2/LXGWWenKaiMono-Medium.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '思源黑体';
+  src: url('./woff2/SourceHanSansSC-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'MiSans';
+  src: url('./woff2/MiSans-Regular.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '阿里妈妈方圆';
+  src: url('./woff2/AlimamaFangYuan.woff2') format('woff2');
+  font-style: normal;
+  font-display: swap;
+}
+
+/* =============================================================================
+ * 制图 Web 字体（Konva / Canvas 按 font-family 按需加载）
+ * ============================================================================= */
+
+/* 体力数字 */
+@font-face {
+  font-family: 'BrushStroke-Simple';
+  src: url('./woff2/BrushStroke-Simple.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 武将名 · 金梅毛草行（无官方英文文件名） */
+@font-face {
+  font-family: '金梅毛草行';
+  src: url('./woff2/金梅毛草行_GBK-Regular-9.01.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 称号 · 华康新篆体 */
+@font-face {
+  font-family: '华康新篆体';
+  src: url('./woff2/DFNewZhuanTi-v1.12.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 势力字 · 汉仪尚巍手书 / 汉仪秦川飞影 */
+@font-face {
+  font-family: '汉仪尚巍手书';
+  src: url('./woff2/HYShangWeiShouShu.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '汉仪秦川飞影';
+  src: url('./woff2/HYQinChuanFeiYing.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 技能名 · 隶书 */
+@font-face {
+  font-family: '隶书';
+  src: url('./woff2/隶书.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 技能描述（老版 / 新版 / 衍生） */
+@font-face {
+  font-family: '汉仪中圆';
+  src: url('./woff2/HYZhongYuan-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '方正准圆';
+  src: url('./woff2/FZJunYuan-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '方正仿宋';
+  src: url('./woff2/FZFangSong-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '汉仪粗仿宋简体';
+  src: url('./woff2/HYCuFangSongJianTi.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 引言 · 方正书宋 */
+@font-face {
+  font-family: '方正书宋';
+  src: url('./woff2/FZShuSong-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 角标 */
+@font-face {
+  font-family: '方正隶变';
+  src: url('./woff2/FZLiBian-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '方正隶二';
+  src: url('./woff2/FZLiEr-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '方正北魏楷书简体';
+  src: url('./woff2/FZBeiWeiKaiShuJianTi-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* 底部信息 */
+@font-face {
+  font-family: '方正黑体';
+  src: url('./woff2/FZHeiTi-GBK.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '微软雅黑';
+  src: url('./woff2/MicrosoftYaHei-Regular.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '微软雅黑_游卡桌游';
+  src: url('./woff2/MicrosoftYaHei-Yoka.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Adobe黑体_数字';
+  src: url('./woff2/AdobeHeiTi-Numeric.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'SourceSans3-Medium';
+  src: url('./woff2/SourceSans3-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Arial_EN';
+  src: url('./woff2/Arial_EN.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: '方正兰亭黑';
+  src: url('./woff2/FZLanTingHei.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
