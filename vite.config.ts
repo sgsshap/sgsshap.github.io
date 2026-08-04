@@ -45,6 +45,7 @@ function fontCssVersionPlugin(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: process.env.VITE_PUBLIC_BASE ?? '/',
   server: {
     proxy: {
       '/api': {
