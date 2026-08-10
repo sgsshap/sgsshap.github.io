@@ -101,16 +101,16 @@ export function buildModifyLabel(field: string, options?: RecordModifyOptions): 
  */
 export function recordModify(field: string, options?: RecordModifyOptions) {
   if (options?.before !== undefined || options?.after !== undefined) {
-    if (Object.is(options.before, options.after)) return
+    if (Object.is(options.before, options.after)) return Promise.resolve(false)
     if (
       options.format === 'kingdoms' &&
       JSON.stringify(options.before) === JSON.stringify(options.after)
     ) {
-      return
+      return Promise.resolve(false)
     }
   }
 
-  record({
+  return record({
     category: options?.category ?? 'other',
     label: buildModifyLabel(field, options),
     force: options?.force,

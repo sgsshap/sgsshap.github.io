@@ -438,7 +438,7 @@ export const useDiyHistoryStore = defineStore('diyHistory', () => {
     snapshot: DiyInfoSnapshot,
     options?: { syncFrameBeforeRecord?: boolean },
   ) => {
-    if (!bootstrappedKinds.value[kind]) return
+    if (!bootstrappedKinds.value[kind]) return Promise.resolve(false)
 
     const stack = stacks.value[kind]
     if (options?.syncFrameBeforeRecord !== false && kind === 'legend') {
@@ -460,7 +460,7 @@ export const useDiyHistoryStore = defineStore('diyHistory', () => {
       prev &&
       snapshotRecordSignature(prev.snapshot) === snapshotRecordSignature(snapshot)
     ) {
-      return
+      return Promise.resolve(true)
     }
 
     const truncated = stack.entries.slice(0, stack.index + 1)
@@ -486,8 +486,9 @@ export const useDiyHistoryStore = defineStore('diyHistory', () => {
     stack.index = truncated.length - 1
     if (input.category === 'layout') {
       schedulePersist({ layoutOnly: true })
+      return Promise.resolve(true)
     } else {
-      void persistNow()
+      return persistNow()
     }
   }
 
@@ -503,8 +504,12 @@ export const useDiyHistoryStore = defineStore('diyHistory', () => {
    * 须先完成 finishBootstrap（画布就绪后的「初始状态」）
    */
   const record = (input: DiyHistoryRecordInput) => {
-    if (isRestoring.value) return
-    appendHistoryEntry(input, activeInfoKind.value, captureSnapshot(activeInfoKind.value))
+    if (isRestoring.value) return Promise.resolve(false)
+    return appendHistoryEntry(
+      input,
+      activeInfoKind.value,
+      captureSnapshot(activeInfoKind.value),
+    )
   }
 
   /** 读取 .shap 进度（与 prepareFromPersisted + reload 同一套恢复时序） */

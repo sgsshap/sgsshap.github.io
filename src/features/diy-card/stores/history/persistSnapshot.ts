@@ -46,6 +46,13 @@ export const registerInlineImageAsset = (
   data: string,
   assets: PersistedBinaryAssets,
 ): string => {
+  if (isPersistedImageRef(data)) {
+    const resolved = resolvePersistedImageSrc(data)
+    if (isInlineImageData(resolved)) {
+      assets[data] = resolved
+    }
+    return data
+  }
   if (!isInlineImageData(data)) return data
   const key = `${ASSET_REF_PREFIX}${hashInlineImage(data)}`
   assets[key] = data

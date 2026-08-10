@@ -81,11 +81,8 @@ const readAssetsFromCache = async (assetKeys: readonly string[]) => {
   return binaryAssets
 }
 
-/** 尽力写入 Cache；失败仅打日志，不阻断 localStorage 元数据持久化 */
-const writeAssetsToCache = async (
-  assets: Record<string, string>,
-  previousKeys: readonly string[],
-): Promise<boolean> => {
+/** 先写入图片 sidecar，成功后才能提交引用这些资源的历史元数据。 */
+const writeAssetsToCache = async (assets: Record<string, string>): Promise<boolean> => {
   const cache = await openAssetCache()
   const assetEntries = Object.entries(assets)
   if (!cache) {
@@ -95,9 +92,8 @@ const writeAssetsToCache = async (
     return assetEntries.length === 0
   }
 
-  const nextKeys = new Set(Object.keys(assets))
-  const writeResults = await Promise.all([
-    ...assetEntries.map(async ([key, data]) => {
+  const writeResults = await Promise.all(
+    assetEntries.map(async ([key, data]) => {
       try {
         await cache.put(assetCacheRequest(key), new Response(data))
         return true
@@ -106,26 +102,36 @@ const writeAssetsToCache = async (
         return false
       }
     }),
-    ...previousKeys
-      .filter((key) => !nextKeys.has(key))
-      .map(async (key) => {
-        try {
-          await cache.delete(assetCacheRequest(key))
-          return true
-        } catch {
-          return true
-        }
-      }),
-  ])
+  )
 
-  const failedWrites = writeResults.slice(0, assetEntries.length).filter((ok) => !ok).length
+  const failedWrites = writeResults.filter((ok) => !ok).length
   if (failedWrites > 0) {
-    console.warn(
-      `[diy-history-storage] ${failedWrites} asset(s) failed to write; history meta was still saved`,
-    )
+    console.warn(`[diy-history-storage] ${failedWrites} asset(s) failed to write`)
     return false
   }
   return true
+}
+
+/** 元数据提交后再清理不再引用的图片，避免失败时破坏上一份可恢复快照。 */
+const removeStaleAssetsFromCache = async (
+  previousKeys: readonly string[],
+  nextKeys: readonly string[],
+) => {
+  const cache = await openAssetCache()
+  if (!cache) return
+
+  const nextKeySet = new Set(nextKeys)
+  await Promise.all(
+    previousKeys
+      .filter((key) => !nextKeySet.has(key))
+      .map(async (key) => {
+        try {
+          await cache.delete(assetCacheRequest(key))
+        } catch {
+          /* 单个旧资源清理失败不影响当前快照 */
+        }
+      }),
+  )
 }
 
 export const invalidateHistoryStorageCache = () => {
@@ -190,6 +196,10 @@ export const writeHistoryStorage = (state: PersistedHistoryState): Promise<boole
       previousKeys = []
     }
 
+    if (!(await writeAssetsToCache(assets))) {
+      return false
+    }
+
     try {
       localStorage.setItem(DIY_HISTORY_META_STORAGE_KEY, JSON.stringify(lean))
     } catch (error) {
@@ -197,12 +207,7 @@ export const writeHistoryStorage = (state: PersistedHistoryState): Promise<boole
       return false
     }
 
-    if (assetKeys.length > 0) {
-      await writeAssetsToCache(assets, previousKeys)
-    } else if (previousKeys.length > 0) {
-      await writeAssetsToCache({}, previousKeys)
-    }
-
+    await removeStaleAssetsFromCache(previousKeys, assetKeys)
     mergeRuntimePersistedBinaryAssets(assets)
     memoryCache = { ...state, binaryAssets: assets }
     return true

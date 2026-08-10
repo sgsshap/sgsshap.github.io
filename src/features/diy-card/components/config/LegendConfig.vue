@@ -589,7 +589,7 @@ const uploadLegendImage = async ({
       invalidateLegendOutOfFrameComposite()
     }
     legend.value.baseInfo.pic = next
-    recordModify('武将图', { category: 'baseInfo' })
+    await recordModify('武将图', { category: 'baseInfo' })
     onFinish?.({ file })
   } finally {
     legendPicUploadRef.value?.clear()
