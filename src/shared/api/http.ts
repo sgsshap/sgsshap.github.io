@@ -1,6 +1,5 @@
+import { API_BASE_URL } from '@/shared/constants/env'
 import type { ApiResult } from '@/shared/types/api'
-
-const API_BASE = '/api'
 
 const DEFAULT_HEADERS: Record<string, string> = {
   'Content-Type': 'application/json; charset=utf-8',
@@ -32,7 +31,7 @@ const parseJson = async <T>(response: Response): Promise<ApiResult<T>> => {
 
 export const http = {
   async get<T>(path: string, init?: RequestInit): Promise<ApiResult<T>> {
-    const response = await fetch(`${API_BASE}${path}`, {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
       method: 'GET',
       headers: buildHeaders(init?.headers),
@@ -42,7 +41,7 @@ export const http = {
   },
 
   async post<T>(path: string, body?: unknown, init?: RequestInit): Promise<ApiResult<T>> {
-    const response = await fetch(`${API_BASE}${path}`, {
+    const response = await fetch(`${API_BASE_URL}${path}`, {
       ...init,
       method: 'POST',
       headers: buildHeaders(init?.headers),

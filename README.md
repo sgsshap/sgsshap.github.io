@@ -4,9 +4,42 @@
 
 此开源版前端项目，是一个开源的三国杀卡牌制作器。该工具有许多丰富的功能，可供大家使用。
 
-> 此 Github 仓库由 ChessBrainIsNotHuman 从 Gitee 搬运。
+- 此 Github 仓库由 ChessBrainIsNotHuman 从 Gitee 搬运并修改。
 
-> 考虑到 gxkord 习惯用 Gitee，象棋脑又学业繁忙，进度可能会跟不上，尽情谅解。
+> 由于 gxkord 习惯用 Gitee，象棋脑又学业繁忙，进度可能会跟不上，尽情谅解。
+
+## 🖥️ 本地运行与部署
+
+### 环境要求
+
+- Node.js 20.19+ 或 22.12+
+- pnpm 10（可通过 Corepack 安装）
+
+### 开发运行
+
+```bash
+git clone https://github.com/sgsshap/open-shap2-web.git
+cd open-shap2-web
+corepack enable
+corepack prepare pnpm@10 --activate
+pnpm install --frozen-lockfile
+pnpm dev
+```
+
+启动后访问终端显示的本地地址，默认是 `http://localhost:5173/`。
+
+### 本地部署生产版本
+
+构建并预览生产版本：
+
+```bash
+pnpm build
+pnpm preview -- --host 0.0.0.0
+```
+
+终端会显示访问地址；同一局域网的设备可使用电脑的局域网 IP 加端口访问。
+
+若使用 Nginx、Caddy 或其他静态文件服务器部署，将构建生成的 `dist/` 目录作为网站根目录即可。本项目使用 Hash 路由，无需额外配置 SPA 刷新回退规则。
 
 
 ## 🔉开发者 gxkord 说
@@ -51,6 +84,39 @@ JxShap 是一个从 0 到 1 重构的开源项目。抛弃所有陈旧的技术�
 ## 📚 开发文档
 
 技术说明统一在 [`docs/`](./docs/README.md)（模板开发、composable、静态资源布局、Vue 规范索引等）。
+
+## 🖥️ 本地运行与部署
+
+### 环境要求
+
+- Node.js 20.19+ 或 22.12+
+- Corepack（随 Node.js 安装）
+
+在 Windows 的非管理员终端中，不要执行 `corepack enable pnpm`：该命令需要向 `C:\Program Files\nodejs` 写入 pnpm shim，可能因权限不足失败。直接通过 Corepack 调用 pnpm 即可。
+
+### 开发运行
+
+```bash
+git clone https://github.com/sgsshap/open-shap2-web.git
+cd open-shap2-web
+corepack pnpm@10 install --frozen-lockfile
+corepack pnpm@10 dev
+```
+
+启动后访问终端显示的本地地址，默认是 `http://localhost:5173/`。
+
+### 本地部署生产版本
+
+构建并预览生产版本：
+
+```bash
+corepack pnpm@10 build
+corepack pnpm@10 exec vite preview --host 0.0.0.0
+```
+
+终端会显示访问地址；同一局域网的设备可使用电脑的局域网 IP 加端口访问。
+
+若使用 Nginx、Caddy 或其他静态文件服务器部署，将构建生成的 `dist/` 目录作为网站根目录即可。本项目使用 Hash 路由，无需额外配置 SPA 刷新回退规则。
 
 ## 👉 访问地址
 

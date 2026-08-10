@@ -1,4 +1,5 @@
 import type { CustomMaterialLayerPosition } from '@/features/diy-card/utils/customMaterial'
+import { resolvePublicAssetSrc } from '@/features/diy-card/constants/publicAssets'
 import {
   createDefaultOutOfFrameConfig,
   type LegendOutOfFrameConfig,
@@ -350,7 +351,7 @@ export const createDefaultLegendBaseInfo = (): BaseLegendInfo => ({
   quality: 'epic',
   legendId: 'WEI 027',
   life: '张春华，司马懿的正妻。 张春华年轻时就有德行，智慧见识超过常人，为司马懿生下司马师、司马昭、司马干和南阳公主。 正始八年夏季四月，张春华去世，葬于洛阳高原陵，追赠广平县君。咸熙元年，追号宣穆妃。张春华的孙子晋武帝司马炎接收禅让建立西晋后，于泰始元年十二月丁卯追尊张春华为宣穆皇后。',
-  pic: '../diy/shared/images/legend_picture_demo_2026.1.9.jpg',
+  pic: resolvePublicAssetSrc('images', 'legend_picture_demo_2026.1.9.jpg'),
   skills: createDefaultLegendSkills(),
   quote: '',
   copyright: '™&© 2026 游卡桌游 .Illustration: ShapByAI',

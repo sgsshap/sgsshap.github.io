@@ -1,5 +1,7 @@
+import { PUBLIC_BASE_URL } from '@/shared/constants/env'
+
 /** Vite `public/diy/` 制图域静态资源（Konva 相对 public 根的路径前缀）。目录说明见 docs/diy-card/public-assets.md */
-export const DIY_PUBLIC_ROOT = '../diy'
+export const DIY_PUBLIC_ROOT = `${PUBLIC_BASE_URL}diy`
 
 /** 跨模板共享素材：public/diy/shared/ */
 export const DIY_PUBLIC_ASSET_BASE = `${DIY_PUBLIC_ROOT}/shared`

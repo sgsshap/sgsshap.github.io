@@ -1,4 +1,5 @@
 import { http } from '@/shared/api/http'
+import { API_BASE_URL } from '@/shared/constants/env'
 import type { PageQuery, PageResult } from '@/shared/types/api'
 import { downloadBlob } from '@/shared/utils/file'
 
@@ -48,7 +49,7 @@ const buildDownloadHeaders = (): Headers => {
 
 /** 下载武将编号 Excel 表 */
 export const downloadLegendNumberExcel = async () => {
-  const response = await fetch('/api/wiki/legend-number/excel', {
+  const response = await fetch(`${API_BASE_URL}/wiki/legend-number/excel`, {
     method: 'GET',
     headers: buildDownloadHeaders(),
     credentials: 'include',
