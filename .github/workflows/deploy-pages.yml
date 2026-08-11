@@ -18,7 +18,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env:
-      VITE_PUBLIC_BASE: /${{ github.event.repository.name }}/
+      VITE_PUBLIC_BASE: /
     steps:
       - name: Checkout
         uses: actions/checkout@v5

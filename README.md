@@ -120,7 +120,7 @@ corepack pnpm@10 exec vite preview --host 0.0.0.0
 
 ## 👉 访问地址
 
-**Github：**[JxShap 开源仓库](https://github.com/sgsshap/open-shap2-web)
+**Github：**[JxShap 开源仓库](https://github.com/sgsshap/sgsshap.github.io)
 
 **Gitee：** [JxShap 开源仓库](https://gitee.com/gxkord/open-shap2-web)
 
